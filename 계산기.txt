@@ -1,0 +1,121 @@
+package swing.layout;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+public class CalculatorEx extends JFrame {
+	
+	public CalculatorEx(String title) {
+		setTitle(title);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(320, 215);
+		setLocationRelativeTo(null);
+		
+		setLayout(new BorderLayout()); // 레이아웃의 종류
+		
+		setPaneNorth();
+		
+		setPaneCenter();
+				
+		setPaneSouth();
+		
+		setResizable(false);
+		
+		setVisible(true);
+	}
+
+	private void setPaneSouth() {
+		JPanel panBottom = new JPanel();
+		panBottom.setLayout(new GridLayout(4, 4, 3, 3));
+		
+		JButton btn1 = new JButton("7");
+		panBottom.add(btn1);
+		
+		JButton btn2 = new JButton("8");
+		panBottom.add(btn2);
+		
+		JButton btn3 = new JButton("9");
+		panBottom.add(btn3);
+		
+		JButton btn4 = new JButton("/");
+		panBottom.add(btn4);
+		
+		JButton btn5 = new JButton("4");
+		panBottom.add(btn5);
+		
+		JButton btn6 = new JButton("5");
+		panBottom.add(btn6);
+		
+		JButton btn7 = new JButton("6");
+		panBottom.add(btn7);
+		
+		JButton btn8 = new JButton("*");
+		panBottom.add(btn8);
+		
+		JButton btn9 = new JButton("1");
+		panBottom.add(btn9);
+		
+		JButton btn10 = new JButton("2");
+		panBottom.add(btn10);
+		
+		JButton btn11 = new JButton("3");
+		panBottom.add(btn11);
+		
+		JButton btn12 = new JButton("-");
+		panBottom.add(btn12);
+		
+		JButton btn13 = new JButton("0");
+		panBottom.add(btn13);
+		
+		JButton btn14 = new JButton("=");
+		panBottom.add(btn14);
+		
+		JButton btn15 = new JButton(".");
+		panBottom.add(btn15);
+		
+		JButton btn16 = new JButton("+");
+		panBottom.add(btn16);
+		
+		add(panBottom, BorderLayout.SOUTH);
+	}
+
+	private void setPaneCenter() {
+		JPanel panCenter = new JPanel();
+		
+		
+		JButton btn1 = new JButton("←");
+		btn1.setPreferredSize(new Dimension(95, 30));
+		btn1.setForeground(Color.BLUE);
+		panCenter.add(btn1);
+		
+		JButton btn2 = new JButton("CE");
+		btn2.setForeground(Color.RED);
+		btn2.setPreferredSize(new Dimension(95, 30));
+		panCenter.add(btn2);
+		
+		JButton btn3 = new JButton("C");
+		btn3.setForeground(Color.RED);
+		btn3.setPreferredSize(new Dimension(95, 30));
+		panCenter.add(btn3);
+		
+		add(panCenter, BorderLayout.CENTER);
+	}
+
+	private void setPaneNorth() {
+		JPanel panNorth = new JPanel();
+		
+		JTextArea ta = new JTextArea(1, 27);
+		ta.setEditable(false);
+		panNorth.add(ta);
+		
+		add(panNorth, BorderLayout.NORTH);
+	}
+}
