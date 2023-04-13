@@ -1,0 +1,44 @@
+package swing.event;
+
+import java.awt.Container;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class MouseAdapterEx extends JFrame {
+	
+	private JLabel lbl;
+
+	public MouseAdapterEx(String title) {
+		setTitle(title);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(300, 300);
+		setLocationRelativeTo(null);
+		setLayout(null);
+		
+		Container contentPane = getContentPane();
+		contentPane.addMouseListener(new MyMouseAdapter());
+		
+		lbl = new JLabel("hello");
+		add(lbl);
+		lbl.setSize(60, 25);
+		lbl.setLocation(60, 60);
+		setVisible(true);
+	}
+	
+	class MyMouseAdapter extends MouseAdapter {
+		public void mousePressed(MouseEvent e) {
+			int x = e.getX();
+			int y = e.getY();
+			lbl.setLocation(x, y);
+		}
+	}
+	
+	public static void main(String[] args) {
+		new MouseAdapterEx("MouseAdapterEx");
+
+	}
+
+}

@@ -1,0 +1,141 @@
+package swing.event;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.text.AbstractDocument.Content;
+
+public class MyMouseEventEx extends JFrame implements MouseListener, KeyListener, MouseMotionListener {
+
+	private JLabel lbl;
+	public final int STEP = 20;
+	private Container contentPane;
+	
+	public MyMouseEventEx(String title) {
+		setTitle(title);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(300, 300);
+		setLocationRelativeTo(null);
+		setLayout(null);
+						
+		contentPane = getContentPane();
+		contentPane.setLayout(null);
+		contentPane.addMouseListener(this);
+		contentPane.addKeyListener(this);
+		contentPane.addMouseMotionListener(this);
+		
+		lbl = new JLabel("Move me");
+		lbl.setSize(60, 25);
+		lbl.setLocation(60, 60);
+		lbl.addMouseListener(this);
+		contentPane.add(lbl);
+		
+				
+		setVisible(true);
+		
+		//★★★★★★포커스 위치 확인!!! 이 위치에 포커스를 설정해야 이벤트가 먹음(setVisible밑)
+		contentPane.setFocusable(true);
+		contentPane.requestFocus();
+		
+	}
+	
+	public static void main(String[] args) {
+		new MyMouseEventEx("MyMouseEvent");
+
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+//		int x = e.getX();
+//		int y = e.getY();
+////		System.out.println(x +", " + y);
+//		lbl.setLocation(x, y);
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		int x = e.getX();
+		int y = e.getY();
+		lbl.setLocation(x, y);
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		contentPane.setBackground(Color.ORANGE);
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		contentPane.setBackground(Color.CYAN);
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		char c = e.getKeyChar();
+		int i = e.getKeyCode();
+		
+		if(i == KeyEvent.VK_UP) {
+			System.out.println("UP");
+			lbl.setLocation(lbl.getX(), lbl.getY()-STEP);
+		}
+		else if(i == KeyEvent.VK_DOWN) {
+			System.out.println("DOWN");
+			lbl.setLocation(lbl.getX(), lbl.getY()+STEP);
+		}
+		else if(i == KeyEvent.VK_LEFT) {
+			System.out.println("LEFT");
+			lbl.setLocation(lbl.getX()-STEP, lbl.getY());
+		}
+		else if(i == KeyEvent.VK_RIGHT) {
+			System.out.println("RIGHT");
+			lbl.setLocation(lbl.getX()+STEP, lbl.getY());
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		Point p = e.getPoint(); // point로 하면 x,y값을 가져오지 않아도 가능
+//		int x = e.getX();
+//		int y = e.getY();
+		lbl.setLocation(p);
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+
+	}
+
+}

@@ -1,0 +1,44 @@
+package swing.component;
+
+import java.awt.Color;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import swing.frame.ContentPaneFrame;
+
+public class ComponentEx extends JFrame {
+	
+	public ComponentEx(String title) {
+		setTitle(title);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(300, 300);
+		setLocationRelativeTo(null);
+		setLayout(new FlowLayout());
+		
+		JButton btn1 = new JButton("버튼1");
+		btn1.setBackground(Color.GREEN);
+		btn1.setForeground(Color.RED); // 글자색 변경
+		add(btn1);
+		
+		JButton btn2 = new JButton("버튼2");
+		btn2.setEnabled(false);
+		add(btn2);
+		
+		JButton btn3 = new JButton("버튼3");
+		btn3.setVisible(true);
+		add(btn3);
+		
+		JLabel lbl = new JLabel("나는 레벨");
+		lbl.setOpaque(true); // 불투명한 것이 true여야 색이 보이기 때문에 true
+		lbl.setBackground(Color.GREEN);
+		add(lbl);
+		
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		new ComponentEx("ComponentEx");
+	}
+}

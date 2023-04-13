@@ -1,0 +1,39 @@
+package swing.frame;
+
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class ContentPaneFrame extends JFrame {
+	
+	public ContentPaneFrame(String title) {
+		setTitle(title);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(300, 300);
+		setLocationRelativeTo(null);
+		//레이아웃
+		setLayout(new FlowLayout()); // 가장 기본이 되는 레이아웃은 BorderLayout  
+		
+		
+		JButton btn1 = new JButton("OK");
+		btn1.setBackground(Color.RED);//배경색 변경
+		add(btn1);
+		JButton btn2 = new JButton("Cancel");
+		btn2.setBackground(Color.GREEN);
+		add(btn2);
+		JButton btn3 = new JButton("Ignore");
+		btn3.setBackground(Color.BLUE);
+		add(btn3);
+		
+		Container contentPane = getContentPane(); // 설정을 해야 배경색깔을 변경할 수 있음
+		
+		contentPane.setBackground(Color.ORANGE); // contentPane의 색깔 설정
+		
+		
+		
+		setVisible(true);
+	}
+}

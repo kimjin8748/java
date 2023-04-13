@@ -1,0 +1,49 @@
+package swing.note;
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
+public class TestFrame extends JFrame implements ActionListener {
+	
+	private JTextField textField;
+	private JButton btn;
+	private CalcFrame calcFrame;
+
+	public TestFrame(String title, int x, int y, CalcFrame calcFrame) {
+		this.calcFrame = calcFrame;//함수의 멤버변수에 private한 전역변수를 넣는 것
+		setTitle(title);		
+		setSize(300, 300);
+		setLocation(x, y);
+		setLayout(new FlowLayout());
+		
+		textField = new JTextField(10);
+		add(textField);
+		
+		btn = new JButton("버튼");
+		btn.addActionListener(this);
+		add(btn);
+		
+		
+		setVisible(true);
+	}
+//	public static void main(String[] args) {
+//		new TestFrame("TestFrame");
+//	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		
+		if(obj == btn) {
+			String str = textField.getText();
+			calcFrame.getTextField().setText(str);// 다른쪽의 변수를 접근하기 위해서 이런식으로 접근해야 함
+			
+		}
+		
+	}
+}

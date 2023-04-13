@@ -1,0 +1,62 @@
+package swing.event;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+public class NoLayoutFrame extends JFrame implements ActionListener {
+
+		private Container contentPane;
+		private JButton btn;
+		public NoLayoutFrame(String title) {
+			setTitle(title);
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setSize(300, 160);
+			setLocationRelativeTo(null);
+			// 레이아웃 설정
+			//setLayout(new FlowLayout()); 
+			setLayout(null);
+			//레이아웃을 설정하지 않으면 디폴트 값이 먹는다.
+			//레이아웃 관리자를 설정하면 사이즈 설정이 되지 않는다.
+			
+			contentPane = getContentPane();
+			
+			btn = new JButton("1");
+			btn.addActionListener(this);
+			btn.setSize(100, 25);
+			btn.setLocation(100, 90);
+			add(btn);
+			
+			JLabel lab1 = new JLabel("이   름");
+			lab1.setBounds(50, 50, 80, 25);
+			add(lab1);
+			
+			JTextField tex1 = new JTextField("");
+			tex1.setBounds(150, 50, 120, 25);
+			add(tex1);
+			
+			setVisible(true);
+			
+		}
+	public static void main(String[] args) {
+		new NoLayoutFrame("NoLayoutFrame");
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Object obj = e.getSource();
+		
+		if(obj == btn) {
+			contentPane.setBackground(Color.RED);
+		}
+	}
+
+}

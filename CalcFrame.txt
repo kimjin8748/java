@@ -1,0 +1,67 @@
+package swing.note;
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public class CalcFrame extends JFrame implements ActionListener {
+	
+	private JButton btn;
+	private JButton btn2;
+	private TestFrame tf;
+	private JTextField textField;
+	
+	public CalcFrame(String title) {
+		setTitle(title);		
+		setSize(300, 300);
+		setLocation(700, 200);
+		setLayout(new FlowLayout());
+		
+		textField = new JTextField(10);
+		add(textField);
+		
+		btn = new JButton("열기");
+		btn.addActionListener(this);
+		add(btn);
+		
+		btn2 = new JButton("변경");
+		btn2.addActionListener(this);
+		add(btn2);
+		
+		
+		
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		new CalcFrame("CalcFrame");
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		
+		if(obj == btn) { // this로 주소를 넘겨주어야 한다
+			tf = new TestFrame("테스트 프레임", 1000, 200, this); // TestFrame tf로 주소를 가져와야 이름을 바꿀 수 있다
+		} else if(obj == btn2) {
+			if(tf != null) {
+				tf.setTitle(textField.getText());				
+			}
+			else {
+				JOptionPane.showMessageDialog(this, "열기 버튼을 먼저 누르세요");
+			}
+		} 
+		
+	}
+	public JTextField getTextField() { // private로 선언된 것을 다른 곳으로 가져가기 위해서 get으로 선언해주어야 함
+		return textField;
+	}
+	public void setTextField(JTextField textField) { // alt + shift + s로 get과 set을 생성할 수 있다
+		this.textField = textField;
+	}
+	
+	
+}
