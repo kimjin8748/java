@@ -1,0 +1,134 @@
+package swing.component;
+
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.ScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Vector;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+public class ListEx extends JFrame implements MouseListener, ActionListener {
+	
+	private JList list;
+	private DefaultListModel<Object> model;
+	private JButton btnLR;
+	private JButton btnRL;
+	private JComboBox cb;
+	private DefaultComboBoxModel cModel;
+	public ListEx(String title) {
+		setTitle(title);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(300, 300);
+		setLocationRelativeTo(null);
+		setLayout(new GridLayout(1, 3));
+		
+		model = new DefaultListModel<>(); // model은 데이터 이다.
+		
+//		String[] sArr = {"AAA", "BBB", "CCC", "DDD", "AAA", "BBB", "CCC", "DDD", "AAA", "BBB", "CCC", "DDD"};		
+		model.addElement("aaa");
+		model.addElement("aaa");
+		model.addElement("AAA");
+		model.addElement("BBB");
+		model.addElement("CCC");
+		model.addElement("DDD");
+		model.addElement("AAA");
+		model.addElement("BBB");
+		model.addElement("CCC");
+		model.addElement("DDD");
+		model.addElement("AAA");
+		model.addElement("BBB");
+		model.addElement("CCC");
+		model.addElement("DDD");
+		
+		list = new JList<>(model);
+		list.addMouseListener(this);
+		
+		JScrollPane scrollPane = new JScrollPane(list);
+		add(scrollPane);
+		
+		JPanel panCenter = new JPanel();
+		
+		btnLR = new JButton("→");		
+		panCenter.add(btnLR);			
+		btnRL = new JButton("←");
+		panCenter.add(btnRL);
+		
+		add(panCenter);
+		btnLR.addActionListener(this);
+		btnRL.addActionListener(this);
+		
+		cModel = new DefaultComboBoxModel<>();
+		cModel.addElement("11111");
+		cModel.addElement("22222");
+		cModel.addElement("33333");
+		cModel.addElement("44444");
+		cModel.addElement("55555");
+		cModel.addElement("66666");
+		cModel.addElement("77777");
+		cModel.addElement("88888");
+		cb = new JComboBox<>(cModel);
+		add(cb);
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		new ListEx("ListEx");
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+		if(e.getClickCount() == 2) {
+			int index = list.getSelectedIndex();
+			String value = (String) list.getSelectedValue(); // 캐스팅해서 문자열로 가져오는 방법
+			System.out.println(index + " : " + value);
+			model.remove(index);
+		}		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		
+		if(obj == btnLR) {
+			int index = list.getSelectedIndex();
+			String value = (String) list.getSelectedValue();
+			model.remove(index);
+			cModel.addElement(value);
+		} else if(obj == btnRL) {
+			int index = cb.getSelectedIndex();
+			Object value = cb.getSelectedItem();
+			cModel.removeElementAt(index);
+			model.add(index, value);
+		}
+		
+	}
+}

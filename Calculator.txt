@@ -1,0 +1,235 @@
+package swing.layout;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+public class CalculatorEx extends JFrame implements ActionListener {
+	
+	JButton[] btnNmubers = new JButton[10];
+	private JButton btnBack;
+	private JButton btnClean;
+	private JButton btnClean2;
+	private JTextArea ta;
+	private JButton btn7;
+	private JButton btn8;
+	private JButton btn9;
+	private JButton btnDiv;
+	private JButton btn4;
+	private JButton btn5;
+	private JButton btn6;
+	private JButton btnMul;
+	private JButton btn1;
+	private JButton btn2;
+	private JButton btn3;
+	private JButton btnSub;
+	private JButton btn0;
+	private JButton btnComp;
+	private JButton btnDot;
+	private JButton btnAdd;
+	double result = 0, num1, num2, temp = 0;
+	private String cal;
+	private ArrayList<String> numAcc = new ArrayList<String>();
+	public CalculatorEx(String title) {
+		setTitle(title);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(320, 215);
+		setLocationRelativeTo(null);
+		
+		setLayout(new BorderLayout()); // 레이아웃의 종류
+		
+		JPanel panBottom = new JPanel();
+		
+		setPaneNorth();
+		
+		setPaneCenter();
+				
+		setPaneSouth(panBottom);
+		
+		setResizable(false);
+		
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		new CalculatorEx("CalculatorEx");
+	}
+
+	private void setPaneSouth(JPanel panBottom) {
+		panBottom.setLayout(new GridLayout(4, 4, 3, 3));
+		
+		for(int i = 0; i < 10; i++) {
+			btnNmubers[i] = new JButton(String.valueOf(i));
+			btnNmubers[i].addActionListener(this);
+		}
+		
+		
+		panBottom.add(btnNmubers[7]);
+		
+		panBottom.add(btnNmubers[8]);
+		
+		panBottom.add(btnNmubers[9]);		
+		
+		btnDiv = new JButton("/");
+		panBottom.add(btnDiv);
+		
+		panBottom.add(btnNmubers[4]);
+		
+		panBottom.add(btnNmubers[5]);
+		
+		panBottom.add(btnNmubers[6]);		
+		
+		btnMul = new JButton("*");
+		panBottom.add(btnMul);
+		
+		panBottom.add(btnNmubers[3]);
+		
+		panBottom.add(btnNmubers[2]);
+		
+		panBottom.add(btnNmubers[1]);
+		
+		btnSub = new JButton("-");
+		panBottom.add(btnSub);
+		
+		panBottom.add(btnNmubers[0]);
+		
+		btnComp = new JButton("=");
+		panBottom.add(btnComp);
+		
+		btnDot = new JButton(".");
+		panBottom.add(btnDot);
+		
+		btnAdd = new JButton("+");
+		panBottom.add(btnAdd);
+		
+		btnAdd.addActionListener(this);
+		btnSub.addActionListener(this);
+		btnDiv.addActionListener(this);
+		btnMul.addActionListener(this);
+		btnComp.addActionListener(this);
+		btnDot.addActionListener(this);
+		
+		add(panBottom, BorderLayout.SOUTH);
+	}
+
+	private void setPaneCenter() {
+		JPanel panCenter = new JPanel();
+		
+		
+		btnBack = new JButton("←");
+		btnBack.setPreferredSize(new Dimension(95, 30));
+		btnBack.setForeground(Color.BLUE);
+		panCenter.add(btnBack);
+		
+		btnClean = new JButton("CE");
+		btnClean.setForeground(Color.RED);
+		btnClean.setPreferredSize(new Dimension(95, 30));
+		panCenter.add(btnClean);
+		
+		btnClean2 = new JButton("C");
+		btnClean2.setForeground(Color.RED);
+		btnClean2.setPreferredSize(new Dimension(95, 30));
+		panCenter.add(btnClean2);
+		
+		btnBack.addActionListener(this);
+		btnClean.addActionListener(this);
+		btnClean2.addActionListener(this);
+		
+		add(panCenter, BorderLayout.CENTER);
+	}
+
+	private void setPaneNorth() {
+		JPanel panNorth = new JPanel();
+		
+		ta = new JTextArea(1, 27);
+		ta.setEditable(false);
+		panNorth.add(ta);
+		
+		add(panNorth, BorderLayout.NORTH);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();		
+		//back, clear, dot키 구현
+		if(obj == btnBack) {
+			String str = ta.getText();//str변수에 ta에 있는 값을 저장하고
+			ta.setText("");//문자열을 모두 공백으로 만듬
+			for(int i = 0; i < str.length()-1; i++) {
+				ta.setText(ta.getText()+str.charAt(i));//문자를 하나씩 가져와 마지막 문자만 지우는 작업
+			}
+		} else if(obj == btnClean || obj == btnClean2) {
+			ta.setText("");
+		}
+		if(obj == btnDot) {
+			if(!ta.getText().contains(".")) {
+				ta.setText(ta.getText() + ".");
+			}
+		}
+		//연산 구현
+		for(int i = 0; i < 10; i++) {
+			if(obj == btnNmubers[i]) {				
+				ta.setText(ta.getText().concat(String.valueOf(i)));// concat 하나의 객체로 합치는 작업
+				
+			}
+		}
+		if (obj == btnAdd || obj == btnSub || obj == btnMul || obj == btnDiv) {
+		    if (num1 == 0) {
+		        num1 = Double.parseDouble(ta.getText());
+		    } else {
+		        temp = Double.parseDouble(ta.getText());
+		        switch (cal) {
+		            case "더하기":
+		                num1 += temp;
+		                break;
+		            case "빼기":
+		                num1 -= temp;
+		                break;
+		            case "곱하기":
+		                num1 *= temp;
+		                break;
+		            case "나누기":
+		                num1 /= temp;
+		                break;
+		        }
+		    }
+		    if (obj == btnAdd) {
+		        cal = "더하기";
+		    } else if (obj == btnSub) {
+		        cal = "빼기";
+		    } else if (obj == btnMul) {
+		        cal = "곱하기";
+		    } else if (obj == btnDiv) {
+		        cal = "나누기";
+		    }
+		    ta.setText("");
+		} else if (obj == btnComp) {
+		    num2 = Double.parseDouble(ta.getText());
+		    switch (cal) {
+		        case "더하기":
+		            result = num1 + num2;
+		            break;
+		        case "빼기":
+		            result = num1 - num2;
+		            break;
+		        case "곱하기":
+		            result = num1 * num2;
+		            break;
+		        case "나누기":
+		            result = num1 / num2;
+		            break;
+		    }
+		    ta.setText(String.valueOf(result));
+		    num1 = 0;
+		}
+
+	}
+}
