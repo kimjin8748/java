@@ -1,0 +1,117 @@
+package swing.test;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+public class ChatProgram extends JFrame implements ActionListener {
+	
+	
+	private JButton btnStart;
+	private ChatProgram2 c2;
+	private JTextField tf;
+	private JTextArea ta;
+	private JButton btnSend;
+	public ChatProgram(String title) {
+		setTitle(title);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(400, 500);
+		setLocation(800, 300);
+		setLayout(new FlowLayout());
+		setResizable(false);
+		
+		Container cp = getContentPane();
+		cp.setBackground(Color.LIGHT_GRAY);
+		
+		NorthPane();
+		
+		CenterPane();
+		
+		SouthPane();
+		
+		setVisible(true);
+	}
+	private void SouthPane() {
+		JPanel paneSouth = new JPanel();
+		
+		tf = new JTextField(20);
+		tf.addActionListener(this);
+		paneSouth.add(tf);
+		
+		btnSend = new JButton("보내기");
+		btnSend.addActionListener(this);
+		btnSend.setPreferredSize(new Dimension(100,30));
+		paneSouth.add(btnSend);
+		
+		add(paneSouth, BorderLayout.SOUTH);
+		
+	}
+	private void CenterPane() {
+		JPanel paneCenter = new JPanel();
+		
+		ta = new JTextArea(22, 32);		
+		ta.setLineWrap(true);
+		ta.setEditable(false);
+		
+		JScrollPane sp = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		paneCenter.add(sp);
+		
+		add(paneCenter, BorderLayout.CENTER);
+		
+	}
+	private void NorthPane() {
+		JPanel paneNorth = new JPanel();
+		
+		JLabel label = new JLabel("채팅을 시작하려면 시작버튼을 누르세요.");
+		paneNorth.add(label);
+		
+		btnStart = new JButton("시작");
+		btnStart.addActionListener(this);
+		paneNorth.add(btnStart);
+		
+		add(paneNorth, BorderLayout.NORTH);
+	}
+	public static void main(String[] args) {
+		new ChatProgram("ChatProgram");
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		
+		if(obj == btnStart) {
+			c2 = new ChatProgram2("ChatProgram2", 1200, 300, this);
+		} else if(!tf.getText().equals("")) {
+			if(c2 != null ) {
+				ta.append("[김용진] : " + tf.getText() + "\n");
+				String str = ta.getText();
+				c2.getTa().setText(str);				
+			} else {
+				JOptionPane.showMessageDialog(this, "채팅 프로그램을 먼저 시작하세요.", 
+						"경고", JOptionPane.WARNING_MESSAGE);	
+			}
+		}
+		tf.setText("");
+		
+	}
+	public JTextArea getTa() {
+		return ta;
+	}
+	public void setTa(JTextArea ta) {
+		this.ta = ta;
+	}
+}

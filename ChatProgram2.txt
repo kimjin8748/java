@@ -1,0 +1,113 @@
+package swing.test;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+public class ChatProgram2 extends JFrame implements ActionListener {
+	
+	private JButton btnEND;
+	private JTextArea ta;
+	private JTextField tf;
+	private ChatProgram c1;
+	public ChatProgram2(String title, int x, int y, ChatProgram c1) {
+		setTitle(title);
+		this.c1 = c1;
+		setSize(400, 500);
+		setLocation(x, y);
+		setLayout(new FlowLayout());
+		setResizable(false);
+		
+		Container cp = getContentPane();
+		cp.setBackground(Color.LIGHT_GRAY);
+		
+		NorthPane();
+		
+		CenterPane();
+		
+		SouthPane();
+		
+		setVisible(true);
+	}
+	private void SouthPane() {
+		JPanel paneSouth = new JPanel();
+		
+		tf = new JTextField(20);
+		tf.addActionListener(this);
+		paneSouth.add(tf);
+		
+		JButton btnSend = new JButton("보내기");
+		btnSend.setPreferredSize(new Dimension(100,30));
+		paneSouth.add(btnSend);
+		
+		add(paneSouth, BorderLayout.SOUTH);
+		
+	}
+	private void CenterPane() {
+		JPanel paneCenter = new JPanel();
+		
+		ta = new JTextArea(22, 32);
+		ta.setLineWrap(true);
+		ta.setEditable(false);
+		
+		JScrollPane sp = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		paneCenter.add(sp);
+		
+		add(paneCenter, BorderLayout.CENTER);
+		
+	}
+	private void NorthPane() {
+		JPanel paneNorth = new JPanel();
+		
+		JLabel label = new JLabel("채팅을 종료하려면 종료버튼을 누르세요.");
+		paneNorth.add(label);
+		
+		btnEND = new JButton("종료");
+		btnEND.addActionListener(this);
+		paneNorth.add(btnEND);
+		
+		add(paneNorth, BorderLayout.NORTH);
+	}
+//	public static void main(String[] args) {
+//		new ChatProgram2("ChatProgram");
+//	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		
+		if(obj == btnEND) {			
+			if(JOptionPane.showConfirmDialog(this, "정말 종료하시겠습니까?", "종류 확인", 
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+					== JOptionPane.YES_OPTION) {
+				System.exit(0);
+			}
+		} else if(!tf.getText().equals("")) {			
+			ta.append("[아무개] : " + tf.getText() + "\n");
+			String str = ta.getText();
+			c1.getTa().setText(str);			
+		}
+		tf.setText("");
+		
+	}
+	public JTextArea getTa() {
+		return ta;
+	}
+	public void setTa(JTextArea ta) {
+		this.ta = ta;
+	}
+}
