@@ -1,0 +1,64 @@
+package db.bagic;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
+
+public class JDBC_Ex {
+
+	public static void main(String[] args) {
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");// 드라이버(마븐에서 먼저 가져와야 함)
+			Connection conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost/cban", 
+					"root", "1234");
+			System.out.println("ok");
+			
+			Statement stmt = conn.createStatement();
+			
+			//데이터 입력
+//			String sid = JOptionPane.showInputDialog("번호");
+//			String sname = JOptionPane.showInputDialog("이름");
+//			String sdept = JOptionPane.showInputDialog("학과");
+//			
+//			String insertSQL = "INSERT INTO student (id, name, dept) values "
+//					+ "('" + sid + "', '" + sname + "', '" + sdept + "')";//변수명을 잘 확인해서 넣어야 함
+//			stmt.executeUpdate(insertSQL);
+			
+			//데이터 수정
+			String updateSQL = "UPDATE student SET "
+					+ "dept = '컴퓨터시스템'"
+					+ "where id = '1111111'";
+			stmt.execute(updateSQL);
+			
+			//데이터 삭제
+			String deleteSQL = "DELETE FROM student where id ='sid'";
+			stmt.executeUpdate(deleteSQL);
+			
+			
+			//데이터베이스 읽기
+			ResultSet rs = stmt.executeQuery("SELECT * FROM student");//문자열안에 문자열이어서 ''로 해야됨(where id='1111111')
+			
+			while(rs.next()) {
+				String id = rs.getString(1);// db의 인덱스는 1번부터 시작한다
+				String name = rs.getString("name");//컬럼이름으로 가져옴
+				String dept = rs.getString(3);
+				System.out.println(id + " : " + name + " : " + dept);
+			}
+			
+		} catch (ClassNotFoundException e) {
+			System.out.println("해당 드라이버가 존재하지 않습니다.");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 입니다.");
+			e.printStackTrace();
+		}  
+
+	}
+
+}
