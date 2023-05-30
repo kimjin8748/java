@@ -1,0 +1,1666 @@
+package pos;
+
+import java.awt.Color;
+
+
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import java.awt.CardLayout;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+
+import pos.paymentPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+
+public class MainFrame extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField;
+	private paymentPanel paymentPanel;
+	private JButton btnNewButton_10;
+	private JButton btnNewButton_11;
+	private JButton btnNewButton_13;
+	private JButton btnNewButton_12;
+	private JButton btnNewButton_14;
+	private JButton btnNewButton_15;
+	private JButton btnNewButton_16;
+	private JButton btnNewButton_17;
+	private JButton btnNewButton_18;
+	private JButton btnNewButton_19;
+	private JButton btnNewButton_20;
+	private JButton btnNewButton_21;
+	private JButton btnNewButton_22;
+	private JButton btnNewButton_23;
+	private JButton btnNewButton_24;
+	private JButton btnNewButton_25;
+	private JButton btnNewButton_26;
+	private JButton btnNewButton_27;
+	private JButton btnNewButton_28;
+	private JButton btnNewButton_29;
+	private JButton btnNewButton_30;
+	private JButton btnNewButton_31;
+	private JButton btnNewButton_32;
+	private JButton btnNewButton_33;
+	private JButton btnNewButton_34;
+	private JButton btnNewButton_35;
+	private JButton btnNewButton_36;
+	private JButton btnNewButton_37;
+	private JButton btnNewButton_38;
+	private JButton btnNewButton_39;
+	private JButton btnNewButton_40;
+	private DefaultListModel<String> listModel;	
+	private ResultSet resultSet;	
+	private JScrollPane scrollPane;
+	private JPanel panel_2;
+	private JButton btnNewButton_42;
+	private DefaultListModel<String> listModel_1;
+	private JTextArea textArea;
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DB.init();
+					MainFrame frame = new MainFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	ImageIcon imgConfig = new ImageIcon("./images/configuration.png");
+	ImageIcon imgMainLogo = new ImageIcon("images/storelogo.png");
+	ImageIcon imgLogo = new ImageIcon("images/HYPOS.png");
+	ImageIcon imgSystemOff = new ImageIcon("images/systemoff.png");
+	ImageIcon imgSM = new ImageIcon("images/monitor.png");
+	ImageIcon imgPM = new ImageIcon("images/book.png");
+	private JTable tableSale;
+	private JTable tableStore;
+	/**
+	 * @wbp.nonvisual location=-60,659
+	 */
+	private final JTextField textField_1 = new JTextField();
+	private JTextField textField_2;
+	private JTextField textPCode;
+	private JTextField textPName;
+	private JTextField textPrice;
+	private JTable Barcodetable;
+	private JTextField textField_3;
+	private JScrollPane scrollPane1;
+	private JScrollPane scrollPane2;
+	private JScrollPane scrollPane3;
+	private DefaultListModel<String> listModel1;
+	private DefaultListModel<String> listModel2;
+	private DefaultListModel<String> listModel3;
+	
+
+	public MainFrame() throws SQLException {
+		textField_1.setColumns(10);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1280, 1024);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		setLocationRelativeTo(null);
+		
+		
+		Connection conn = DB.getConnection();
+		Statement stmt = conn.createStatement();
+		
+		
+		TimeMethod();
+		
+		
+        
+        JPanel switchPanel = new JPanel();
+        switchPanel.setBounds(12, 111, 1242, 866);
+        contentPane.add(switchPanel);
+        switchPanel.setLayout(new CardLayout(0, 0));
+        
+        //화면전환 패널 설정
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBackground(new Color(255, 255, 255));
+        switchPanel.add(mainPanel, "MainPanel");
+        mainPanel.setLayout(null);
+        
+        JPanel configPanel = new JPanel();
+        switchPanel.add(configPanel, "PayPanel");
+        configPanel.setLayout(null);
+      
+        JPanel storeManagePanel = new JPanel();
+        switchPanel.add(storeManagePanel, "storeManage");
+        
+        configPanel.setLayout(null);
+        
+        JPanel panel = new JPanel();
+        switchPanel.add(panel, "payment");
+        panel.setLayout(null);
+        
+        JPanel saleManagePanel = new JPanel();
+        saleManagePanel.setBackground(new Color(255, 255, 255));
+        switchPanel.add(saleManagePanel, "saleManage");
+        saleManagePanel.setLayout(null);
+        
+        JButton btnNewButton = new JButton("X");
+        btnNewButton.setForeground(new Color(255, 255, 255));
+        btnNewButton.setBackground(new Color(0, 0, 0));
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		CardLayout cardLayout = (CardLayout) switchPanel.getLayout();
+                cardLayout.show(switchPanel, "MainPanel");
+        	}
+        });
+        btnNewButton.setFont(new Font("굴림", Font.PLAIN, 37));
+        btnNewButton.setBounds(1160, 18, 70, 70);
+        saleManagePanel.add(btnNewButton);
+        
+        JScrollPane scrollPaneSale = new JScrollPane();
+        scrollPaneSale.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPaneSale.setBounds(12, 98, 1218, 657);
+        saleManagePanel.add(scrollPaneSale);
+        
+        tableSale = new JTable();
+        tableSale.setBackground(new Color(255, 255, 255));
+        scrollPaneSale.setViewportView(tableSale);
+        
+        JButton btnDaySale = new JButton("일별매출");
+        btnDaySale.setForeground(new Color(255, 255, 255));
+        btnDaySale.setBackground(new Color(0, 128, 0));
+        btnDaySale.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String sql = "SELECT date AS 일, FORMAT(sales,0) AS 매출 From sale";
+				ResultSet rs = DB.getResultSet(sql);
+				
+				try {
+
+					ResultSetMetaData metaData = rs.getMetaData();
+					DefaultTableModel model = (DefaultTableModel) tableSale.getModel();
+					int cols = metaData.getColumnCount();
+					String[] colName = new String[cols];
+					for (int i = 0; i < colName.length; i++) {
+						colName[i] = metaData.getColumnName(i + 1);
+					}
+					model.setColumnIdentifiers(colName); 
+					model.setRowCount(0);
+					while (rs.next()) {
+						Vector<Object> vec = new Vector<>();
+						vec.add(rs.getString(1));
+						vec.add(rs.getString(2));
+						model.addRow(vec);
+					}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+        	}
+        });
+        btnDaySale.setBounds(12, 65, 95, 23);
+        saleManagePanel.add(btnDaySale);
+        
+        JButton btnMonthSale = new JButton("월별매출");
+        btnMonthSale.setForeground(new Color(255, 255, 255));
+        btnMonthSale.setBackground(new Color(0, 128, 0));
+        btnMonthSale.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String sql = "SELECT MONTH(date) AS 월, FORMAT(SUM(sales), 0) AS 매출 FROM sale GROUP BY MONTH(date)";
+        		ResultSet rs = DB.getResultSet(sql);
+
+        		try {
+        		    ResultSetMetaData metaData = rs.getMetaData();	
+        		    DefaultTableModel model = (DefaultTableModel) tableSale.getModel();
+        		    int cols = metaData.getColumnCount();
+        		    String[] colName = new String[cols];
+        		    for (int i = 0; i < colName.length; i++) {
+        		        colName[i] = metaData.getColumnName(i + 1);
+        		    }
+        		    model.setColumnIdentifiers(colName); 
+        		    model.setRowCount(0);
+        		    while (rs.next()) {
+        		        Vector<Object> vec = new Vector<>();
+        		        vec.add(rs.getString(1));
+        		        vec.add(rs.getString(2));
+        		        model.addRow(vec);
+        		    }
+        		} catch (SQLException e1) {
+        		    e1.printStackTrace();
+        		}
+
+
+        	}
+        });
+        btnMonthSale.setBounds(119, 65, 95, 23);
+        saleManagePanel.add(btnMonthSale);
+        
+        JButton btnYearSale = new JButton("연간매출");
+        btnYearSale.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String sql = "SELECT YEAR(date) AS 년, FORMAT(SUM(sales), 0) AS 매출 FROM sale GROUP BY YEAR(date)";
+        		ResultSet rs = DB.getResultSet(sql);
+
+        		try {
+        		    ResultSetMetaData metaData = rs.getMetaData();
+        		    DefaultTableModel model = (DefaultTableModel) tableSale.getModel();
+        		    int cols = metaData.getColumnCount();
+        		    String[] colName = new String[cols];
+        		    for (int i = 0; i < colName.length; i++) {
+        		        colName[i] = metaData.getColumnLabel(i + 1);
+        		    }
+        		    model.setColumnIdentifiers(colName); 
+        		    model.setRowCount(0);
+        		    while (rs.next()) {
+        		        Vector<Object> vec = new Vector<>();
+        		        vec.add(rs.getString(1));
+        		        vec.add(rs.getString(2));
+        		        model.addRow(vec);
+        		    }
+        		} catch (SQLException e1) {
+        		    e1.printStackTrace();
+        		}
+
+        	}
+        });
+        btnYearSale.setForeground(new Color(255, 255, 255));
+        btnYearSale.setBackground(new Color(0, 128, 0));
+        btnYearSale.setBounds(226, 65, 95, 23);
+        saleManagePanel.add(btnYearSale);
+        configPanel.setLayout(null);
+		
+        
+        mainPanel(switchPanel, mainPanel);
+        
+       
+        
+        
+        
+        
+        JButton btnExit2 = new JButton("X");
+        btnExit2.setBackground(new Color(0, 0, 0));
+        btnExit2.setForeground(new Color(255, 255, 255));
+        btnExit2.setFont(new Font("굴림", Font.PLAIN, 37));
+        btnExit2.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		CardLayout cardLayout = (CardLayout) switchPanel.getLayout();
+                cardLayout.show(switchPanel, "MainPanel");
+        	}
+        });
+        storeManagePanel.setLayout(null);
+        btnExit2.setBounds(1160, 18, 70, 70);
+        storeManagePanel.add(btnExit2);
+        
+        JPanel Table1 = new JPanel();
+        Table1.setBounds(69, 54, 140, 140);
+        storeManagePanel.add(Table1);
+        Table1.setLayout(null);
+        
+        
+        
+        JTextArea table1 = new JTextArea();
+        
+        
+        table1.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		CardLayout cardLayout = (CardLayout) switchPanel.getLayout();
+                cardLayout.show(switchPanel, "payment");
+        	}
+        });	
+        table1.setBackground(new Color(0, 128, 255));
+        table1.setBounds(0, 27, 140, 113);
+        Table1.add(table1);
+        
+        textField = new JTextField();
+        textField.setEditable(false);
+        textField.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+        textField.setText("1");
+        textField.setBounds(0, 0, 140, 28);
+        Table1.add(textField);
+        textField.setColumns(10);
+        
+        
+        //mainPanel 열기  
+        JButton btnExit = new JButton("X");
+        btnExit.setFont(new Font("굴림", Font.PLAIN, 37));
+        btnExit.setBackground(new Color(0, 0, 0));
+        btnExit.setForeground(new Color(255, 255, 255));
+        btnExit.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		CardLayout cardLayout = (CardLayout) switchPanel.getLayout();
+                cardLayout.show(switchPanel, "MainPanel");
+        	}
+        });
+        btnExit.setBounds(1160, 18, 70, 70);
+        configPanel.add(btnExit);
+        
+        JButton btnAddFood = new JButton("메뉴추가");
+        btnAddFood.setForeground(new Color(255, 255, 255));
+        btnAddFood.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
+        btnAddFood.setBackground(new Color(0, 128, 0));
+        btnAddFood.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	
+              String sid = JOptionPane.showInputDialog("번호를 입력하세요!");
+              String sname = JOptionPane.showInputDialog("메뉴 이름을 입력하세요!");
+              String sdept = JOptionPane.showInputDialog("가격을 입력하세요!");
+              
+              String insertSQL = "INSERT INTO store (id, food, price) values "
+                    + "('" + sid + "', '" + sname + "', '" + sdept + "')";//변수명을 잘 확인해서 넣어야 함
+              try {
+				stmt.executeUpdate(insertSQL);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        	}
+        });
+        btnAddFood.setBounds(131, 53, 120, 30);
+        configPanel.add(btnAddFood);
+        
+        JButton btnDelFood = new JButton("메뉴삭제");
+        btnDelFood.setForeground(new Color(255, 255, 255));
+        btnDelFood.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
+        btnDelFood.setBackground(new Color(0, 128, 0));
+        btnDelFood.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String sid = JOptionPane.showInputDialog("번호를 입력하세요!");
+        		String sname = JOptionPane.showInputDialog("메뉴 이름을 입력하세요!");
+
+        		String deleteSQL = "DELETE FROM store WHERE id = '" + sid + "' AND food = '" + sname + "'";
+        		try {
+        		    stmt.executeUpdate(deleteSQL);
+        		} catch (SQLException e1) {
+        		    e1.printStackTrace();
+        		}
+        	}
+        	
+        });
+        btnDelFood.setBounds(248, 53, 120, 30);
+        configPanel.add(btnDelFood);
+        
+        JScrollPane scrollPaneFood = new JScrollPane();
+        scrollPaneFood.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPaneFood.setBounds(12, 93, 360, 769);
+        configPanel.add(scrollPaneFood);
+        
+        tableStore = new JTable();
+        scrollPaneFood.setViewportView(tableStore);
+        
+        JButton btnProductInfo = new JButton("상품정보");
+        btnProductInfo.setForeground(new Color(255, 255, 255));
+        btnProductInfo.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
+        btnProductInfo.setBackground(new Color(0, 128, 0));
+        btnProductInfo.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String sql = "Select id, food, price From store";
+				ResultSet rs = DB.getResultSet(sql);
+				
+				try {
+
+					ResultSetMetaData metaData = rs.getMetaData();
+					DefaultTableModel model = (DefaultTableModel) tableStore.getModel();
+					int cols = metaData.getColumnCount();
+					String[] colName = new String[cols];
+					for (int i = 0; i < colName.length; i++) {
+						colName[i] = metaData.getColumnName(i + 1);
+					}
+					model.setColumnIdentifiers(colName); // 이거 그거 들고오는거 컬럼? 그거
+					model.setRowCount(0);
+					while (rs.next()) {
+						Vector<Object> vec = new Vector<>();
+						vec.add(rs.getString(1));
+						vec.add(rs.getString(2));
+						vec.add(rs.getString(3));
+						model.addRow(vec);
+					}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+        	}
+        });
+        btnProductInfo.setBounds(12, 53, 120, 30);
+        configPanel.add(btnProductInfo);
+        
+        JPanel SelectPanel = new JPanel();
+        SelectPanel.setBackground(new Color(255, 255, 255));
+        SelectPanel.setBounds(384, 93, 846, 70);
+        configPanel.add(SelectPanel);
+        SelectPanel.setLayout(null);
+        
+        textField_2 = new JTextField();
+        textField_2.setText("     상품정보");
+        textField_2.setForeground(new Color(255, 255, 255));
+        textField_2.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+        textField_2.setEditable(false);
+        textField_2.setBackground(new Color(0, 128, 0));
+        textField_2.setBounds(12, 49, 105, 21);
+        SelectPanel.add(textField_2);
+        textField_2.setColumns(10);
+        
+        JPanel panel_1 = new JPanel();
+        panel_1.setBackground(new Color(0, 128, 0));
+        panel_1.setBounds(0, 0, 846, 31);
+        SelectPanel.add(panel_1);
+        
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(384, 161, 846, 701);
+        configPanel.add(scrollPane);
+        
+        JPanel productInfoPanel = new JPanel();
+        scrollPane.setViewportView(productInfoPanel);
+        productInfoPanel.setLayout(null);
+        
+        textPCode = new JTextField();
+        textPCode.setFont(new Font("굴림", Font.PLAIN, 16));
+        textPCode.setBounds(108, 37, 570, 40);
+        productInfoPanel.add(textPCode);
+        textPCode.setColumns(10);
+        
+        textPName = new JTextField();
+        textPName.setFont(new Font("굴림", Font.PLAIN, 16));
+        textPName.setColumns(10);
+        textPName.setBounds(108, 87, 570, 40);
+        productInfoPanel.add(textPName);
+        
+        textPrice = new JTextField();
+        textPrice.setFont(new Font("굴림", Font.PLAIN, 16));
+        textPrice.setColumns(10);
+        textPrice.setBounds(108, 137, 570, 40);
+        productInfoPanel.add(textPrice);
+        
+        JLabel ProductCodeLabel = new JLabel("상품코드");
+        ProductCodeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+        ProductCodeLabel.setBounds(22, 39, 88, 40);
+        productInfoPanel.add(ProductCodeLabel);
+        
+        JLabel ProductNameLabel = new JLabel("상품명");
+        ProductNameLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+        ProductNameLabel.setBounds(40, 87, 70, 40);
+        productInfoPanel.add(ProductNameLabel);
+        
+        JLabel PriceLabel = new JLabel("판매단가");
+        PriceLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+        PriceLabel.setBounds(22, 137, 88, 40);
+        productInfoPanel.add(PriceLabel);
+        
+        JLabel barcodeLabel = new JLabel("바코드");
+        barcodeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+        barcodeLabel.setBounds(40, 187, 70, 40);
+        productInfoPanel.add(barcodeLabel);
+        
+        JButton btnSearchBarcode = new JButton("조회");
+        btnSearchBarcode.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String sbc = JOptionPane.showInputDialog("바코드 번호 입력");
+        		
+        		//바코드 조회시 상품이름 및 가격 id 등 출력 구현
+        		
+        	}
+        });
+        btnSearchBarcode.setBounds(108, 187, 95, 40);
+        productInfoPanel.add(btnSearchBarcode);
+        
+        Barcodetable = new JTable();
+        Barcodetable.setBounds(22, 265, 793, 424);
+        productInfoPanel.add(Barcodetable);
+        
+        JButton btnNewButton1 = new JButton("세트메뉴");
+		btnNewButton1.setForeground(new Color(255, 255, 255));
+		btnNewButton1.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_10.setVisible(true);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_21.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+			}
+		});
+		btnNewButton1.setBackground(Color.DARK_GRAY);
+		btnNewButton1.setBounds(640, 20, 108, 75);
+		panel.add(btnNewButton1);
+		
+		JButton btnNewButton_1 = new JButton("2~3인분메뉴");
+		btnNewButton_1.setForeground(new Color(255, 255, 255));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_11.setVisible(true);
+				btnNewButton_12.setVisible(true);
+				btnNewButton_13.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(true);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_21.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+				
+			}
+		});
+		btnNewButton_1.setBackground(Color.DARK_GRAY);
+		btnNewButton_1.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_1.setBounds(760, 21, 108, 74);
+		panel.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("추가메뉴");
+		btnNewButton_2.setForeground(new Color(255, 255, 255));
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_14.setVisible(true);
+				btnNewButton_15.setVisible(true);
+				btnNewButton_16.setVisible(true);
+				btnNewButton_17.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_11.setVisible(false);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+				
+			}
+		});
+		btnNewButton_2.setBackground(Color.DARK_GRAY);
+		btnNewButton_2.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_2.setBounds(880, 19, 108, 76);
+		panel.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("사이드메뉴");
+		btnNewButton_3.setForeground(new Color(255, 255, 255));
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_18.setVisible(true);
+				btnNewButton_19.setVisible(true);
+				btnNewButton_20.setVisible(true);
+				btnNewButton_21.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_11.setVisible(false);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+			}
+		});
+		btnNewButton_3.setBackground(Color.DARK_GRAY);
+		btnNewButton_3.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_3.setBounds(1000, 19, 108, 76);
+		panel.add(btnNewButton_3);
+		
+		JButton btnNewButton_4 = new JButton("후식메뉴");
+		btnNewButton_4.setForeground(new Color(255, 255, 255));
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_22.setVisible(true);
+				btnNewButton_23.setVisible(true);
+				btnNewButton_24.setVisible(true);
+				btnNewButton_25.setVisible(true);
+				btnNewButton_26.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_11.setVisible(false);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_21.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+			}
+		});
+		btnNewButton_4.setBackground(Color.DARK_GRAY);
+		btnNewButton_4.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_4.setBounds(1120, 19, 108, 76);
+		panel.add(btnNewButton_4);
+		
+		JButton btnNewButton_5 = new JButton("식사메뉴");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_35.setVisible(true);
+				btnNewButton_36.setVisible(true);
+				btnNewButton_37.setVisible(true);
+				btnNewButton_38.setVisible(true);
+				btnNewButton_39.setVisible(true);
+				btnNewButton_40.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_11.setVisible(false);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_21.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+			}
+		});
+		btnNewButton_5.setForeground(new Color(255, 255, 255));
+		btnNewButton_5.setBackground(Color.DARK_GRAY);
+		btnNewButton_5.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_5.setBounds(640, 105, 108, 75);
+		panel.add(btnNewButton_5);
+		
+		JButton btnNewButton_6 = new JButton("주류/음류");
+		btnNewButton_6.setForeground(new Color(255, 255, 255));
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_27.setVisible(true);
+				btnNewButton_28.setVisible(true);
+				btnNewButton_29.setVisible(true);
+				btnNewButton_30.setVisible(true);
+				btnNewButton_31.setVisible(true);
+				btnNewButton_32.setVisible(true);
+				btnNewButton_33.setVisible(true);
+				btnNewButton_34.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_11.setVisible(false);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_21.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+			}
+		});
+		btnNewButton_6.setBackground(Color.DARK_GRAY);		
+		btnNewButton_6.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_6.setBounds(760, 104, 108, 76);
+		panel.add(btnNewButton_6);				
+		
+		JButton btnNewButton_7 = new JButton("주문");
+		btnNewButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cardLayout = (CardLayout) switchPanel.getLayout();
+                cardLayout.show(switchPanel, "storeManage");                
+
+				if (listModel.getSize() == 1 && listModel1.getSize() == 1) {
+					table1.setText(listModel.getElementAt(0) + "\t  " + listModel1.getElementAt(0));
+				} else {
+					table1.append("\n" + listModel.getElementAt(listModel.getSize() - 1) + "\t  "
+							+ listModel1.getElementAt(listModel1.getSize() - 1));
+				}        
+                
+			}
+		});
+		btnNewButton_7.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_7.setBounds(640, 708, 91, 133);
+		panel.add(btnNewButton_7);
+		
+		JButton btnNewButton_8 = new JButton("현금");
+		btnNewButton_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(MainFrame.this, "받을 돈 : " + listModel1.getElementAt(0));
+			}
+		});
+		btnNewButton_8.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_8.setBounds(743, 708, 91, 133);
+		panel.add(btnNewButton_8);
+		
+		JButton btnNewButton_9 = new JButton("<html>신용<br>카드</html>");
+		btnNewButton_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(MainFrame.this, "결제 금액 : " + listModel1.getElementAt(0));
+			}
+		});
+		btnNewButton_9.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_9.setBounds(846, 708, 91, 133);
+		panel.add(btnNewButton_9);
+		
+		//세트메뉴
+		btnNewButton_10 = new JButton("모듬세트");
+		btnNewButton_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("모둠세트");
+			}
+		});
+		btnNewButton_10.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_10.setBounds(640, 190, 108, 75);
+		btnNewButton_10.setVisible(false);
+		panel.add(btnNewButton_10);
+		
+		//2~3인분 메뉴
+		btnNewButton_11 = new JButton("진갈비");
+		btnNewButton_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("진갈비");
+			}
+		});
+		btnNewButton_11.setFont(new Font("굴림", Font.PLAIN, 12));		
+		btnNewButton_11.setBounds(640, 190, 108, 75);
+		btnNewButton_11.setVisible(false);
+		panel.add(btnNewButton_11);
+		
+		btnNewButton_12 = new JButton("안창살");
+		btnNewButton_12.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("안창살");
+			}
+		});
+		btnNewButton_12.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_12.setBounds(760, 190, 108, 75);
+		btnNewButton_12.setVisible(false);
+		panel.add(btnNewButton_12);
+		
+		btnNewButton_13 = new JButton("갈비살");
+		btnNewButton_13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("갈비살");
+			}
+		});
+		btnNewButton_13.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_13.setBounds(880, 190, 108, 75);
+		btnNewButton_13.setVisible(false);
+		panel.add(btnNewButton_13);
+		
+		//추가메뉴
+		btnNewButton_14 = new JButton("눈꽃살(진갈비)");
+		btnNewButton_14.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("눈꽃살(진갈비)");
+			}
+		});
+		btnNewButton_14.setFont(new Font("굴림", Font.PLAIN, 11));
+		btnNewButton_14.setBounds(640, 190, 108, 75);
+		btnNewButton_14.setVisible(false);
+		panel.add(btnNewButton_14);
+		
+		btnNewButton_15 = new JButton("안창살(미국산)");
+		btnNewButton_15.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("안창살(미국산)");
+			}
+		});
+		btnNewButton_15.setFont(new Font("굴림", Font.PLAIN, 10));
+		btnNewButton_15.setBounds(760, 190, 108, 75);
+		btnNewButton_15.setVisible(false);
+		panel.add(btnNewButton_15);
+		
+		btnNewButton_16 = new JButton("갈비살(미국산)");
+		btnNewButton_16.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("갈비살(미국산)");
+			}
+		});
+		btnNewButton_16.setFont(new Font("굴림", Font.PLAIN, 11));
+		btnNewButton_16.setBounds(880, 190, 108, 75);
+		btnNewButton_16.setVisible(false);
+		panel.add(btnNewButton_16);
+		
+		btnNewButton_17 = new JButton("한우/육회");
+		btnNewButton_17.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("한우/육회");
+			}
+		});
+		btnNewButton_17.setFont(new Font("굴림", Font.PLAIN, 11));
+		btnNewButton_17.setBounds(1000, 190, 108, 75);
+		btnNewButton_17.setVisible(false);
+		panel.add(btnNewButton_17);
+		
+		//사이드메뉴
+		btnNewButton_18 = new JButton("모듬소세지");
+		btnNewButton_18.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("모듬소세지");
+			}
+		});
+		btnNewButton_18.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_18.setBounds(640, 190, 108, 75);
+		btnNewButton_18.setVisible(false);
+		panel.add(btnNewButton_18);
+		
+		btnNewButton_19 = new JButton("모듬버섯");
+		btnNewButton_19.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("모듬버섯");
+			}
+		});
+		btnNewButton_19.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_19.setBounds(760, 190, 108, 75);
+		btnNewButton_19.setVisible(false);
+		panel.add(btnNewButton_19);
+		
+		btnNewButton_20 = new JButton("소시지&버섯");
+		btnNewButton_20.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("소시지&버섯");
+			}
+		});
+		btnNewButton_20.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_20.setBounds(880, 190, 108, 75);
+		btnNewButton_20.setVisible(false);
+		panel.add(btnNewButton_20);
+		
+		btnNewButton_21 = new JButton("구워먹는치즈");
+		btnNewButton_21.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("소시지&버섯");
+			}
+		});
+		btnNewButton_21.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_21.setBounds(1000, 190, 108, 75);
+		btnNewButton_21.setVisible(false);
+		panel.add(btnNewButton_21);
+		
+		//후식메뉴
+		btnNewButton_22 = new JButton("된장찌개");
+		btnNewButton_22.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("된장찌개");
+			}
+		});
+		btnNewButton_22.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_22.setBounds(640, 190, 108, 75);
+		btnNewButton_22.setVisible(false);
+		panel.add(btnNewButton_22);
+		
+		btnNewButton_23 = new JButton("계란찜");
+		btnNewButton_23.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("계란찜");
+			}
+		});
+		btnNewButton_23.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_23.setBounds(760, 190, 108, 75);
+		btnNewButton_23.setVisible(false);
+		panel.add(btnNewButton_23);
+		
+		btnNewButton_24 = new JButton("물냉면(후식)");
+		btnNewButton_24.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("물냉면(후식)");
+			}
+		});
+		btnNewButton_24.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_24.setBounds(880, 190, 108, 75);
+		btnNewButton_24.setVisible(false);
+		panel.add(btnNewButton_24);
+		
+		btnNewButton_25 = new JButton("비빔냉면(후식)");
+		btnNewButton_25.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("비빔냉면(후식)");
+			}
+		});
+		btnNewButton_25.setFont(new Font("굴림", Font.PLAIN, 11));
+		btnNewButton_25.setBounds(1000, 190, 108, 75);
+		btnNewButton_25.setVisible(false);
+		panel.add(btnNewButton_25);
+		
+		btnNewButton_26 = new JButton("공기밥");
+		btnNewButton_26.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("공기밥");
+			}
+		});
+		btnNewButton_26.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_26.setBounds(1120, 190, 108, 75);
+		btnNewButton_26.setVisible(false);
+		panel.add(btnNewButton_26);
+		
+		//주류/음료
+		btnNewButton_27 = new JButton("참이슬");
+		btnNewButton_27.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("참이슬");
+			}
+		});
+		btnNewButton_27.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_27.setBounds(640, 190, 108, 75);
+		btnNewButton_27.setVisible(false);
+		panel.add(btnNewButton_27);
+		
+		btnNewButton_28 = new JButton("처음처럼");
+		btnNewButton_28.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("처음처럼");
+			}
+		});
+		btnNewButton_28.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_28.setBounds(760, 190, 108, 75);
+		btnNewButton_28.setVisible(false);
+		panel.add(btnNewButton_28);
+		
+		btnNewButton_29 = new JButton("테라");
+		btnNewButton_29.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("테라");
+			}
+		});
+		btnNewButton_29.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_29.setBounds(880, 190, 108, 75);
+		btnNewButton_29.setVisible(false);
+		panel.add(btnNewButton_29);
+		
+		btnNewButton_30 = new JButton("카스");
+		btnNewButton_30.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("카스");
+			}
+		});
+		btnNewButton_30.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_30.setBounds(1000, 190, 108, 75);
+		btnNewButton_30.setVisible(false);
+		panel.add(btnNewButton_30);
+		
+		btnNewButton_31 = new JButton("진로");
+		btnNewButton_31.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("진로");
+			}
+		});
+		btnNewButton_31.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_31.setBounds(1120, 190, 108, 75);
+		btnNewButton_31.setVisible(false);
+		panel.add(btnNewButton_31);
+		
+		btnNewButton_32 = new JButton("콜라");
+		btnNewButton_32.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("콜라");
+			}
+		});
+		btnNewButton_32.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_32.setBounds(640, 275, 108, 75);
+		btnNewButton_32.setVisible(false);
+		panel.add(btnNewButton_32);
+		
+		btnNewButton_33 = new JButton("사이다");
+		btnNewButton_33.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("사이다");
+			}
+		});
+		btnNewButton_33.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_33.setBounds(760, 275, 108, 75);
+		btnNewButton_33.setVisible(false);
+		panel.add(btnNewButton_33);
+		
+		btnNewButton_34 = new JButton("환타");
+		btnNewButton_34.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("환타");
+			}
+		});
+		btnNewButton_34.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_34.setBounds(880, 275, 108, 75);
+		btnNewButton_34.setVisible(false);
+		panel.add(btnNewButton_34);
+		
+		
+		//식사메뉴
+		btnNewButton_35 = new JButton("장터국밥");
+		btnNewButton_35.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("장터국밥");
+			}
+		});
+		btnNewButton_35.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_35.setBounds(640, 190, 108, 75);
+		btnNewButton_35.setVisible(false);
+		panel.add(btnNewButton_35);
+		
+		btnNewButton_36 = new JButton("갈비탕");
+		btnNewButton_36.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("갈비탕");
+			}
+		});
+		btnNewButton_36.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_36.setBounds(760, 190, 108, 75);
+		btnNewButton_36.setVisible(false);
+		panel.add(btnNewButton_36);
+		
+		btnNewButton_37 = new JButton("육회비빔밥");
+		btnNewButton_37.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("육회비빔밥");
+			}
+		});
+		btnNewButton_37.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_37.setBounds(880, 190, 108, 75);
+		btnNewButton_37.setVisible(false);
+		panel.add(btnNewButton_37);
+		
+		btnNewButton_38 = new JButton("만두국");
+		btnNewButton_38.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("만두국");
+			}
+		});
+		btnNewButton_38.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_38.setBounds(1000, 190, 108, 75);
+		btnNewButton_38.setVisible(false);
+		panel.add(btnNewButton_38);
+		
+		btnNewButton_39 = new JButton("물냉면");
+		btnNewButton_39.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("물냉면");
+			}
+		});
+		btnNewButton_39.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_39.setBounds(1120, 190, 108, 75);
+		btnNewButton_39.setVisible(false);
+		panel.add(btnNewButton_39);
+		
+		btnNewButton_40 = new JButton("비빔냉면");
+		btnNewButton_40.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("비빔냉면");
+			}
+		});
+		btnNewButton_40.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_40.setBounds(640, 275, 108, 75);
+		btnNewButton_40.setVisible(false);
+		panel.add(btnNewButton_40);
+		
+		listModel = new DefaultListModel<>();
+		listModel1 = new DefaultListModel<>();
+		listModel2 = new DefaultListModel<>();
+		listModel3 = new DefaultListModel<>();
+		
+		
+		textField_2 = new JTextField();
+		textField_2.setForeground(new Color(255, 255, 255));
+		textField_2.setText("메뉴명                                         단가                                            수량                                        금액");
+		textField_2.setBackground(new Color(0, 0, 0));
+		textField_2.setBounds(12, 18, 572, 21);
+		textField_2.setEditable(false);
+		panel.add(textField_2);
+		textField_2.setColumns(10);
+		
+		textField_3 = new JTextField();
+		textField_3.setText("");
+		textField_3.setForeground(new Color(255, 255, 255));
+		textField_3.setBackground(new Color(0, 0, 0));
+		textField_3.setBounds(12, 353, 572, 21);
+		textField_3.setEditable(false);
+		panel.add(textField_3);
+		textField_3.setColumns(10);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(12, 39, 157, 317);
+		panel.add(scrollPane);
+		
+		JList<String> list = new JList<>();
+		scrollPane.setViewportView(list);		
+		
+		list.setModel(listModel);	
+		
+		JButton btnNewButton_41 = new JButton("<html>전체<br>취소</html>");
+		btnNewButton_41.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listModel.clear();
+				listModel1.clear();
+				listModel2.clear();
+				listModel3.clear();
+			}
+		});
+		btnNewButton_41.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_41.setBounds(12, 407, 54, 53);
+		panel.add(btnNewButton_41);
+		
+		JButton btnNewButton_43 = new JButton("<html>선택<br>취소</html>");
+		btnNewButton_43.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int[] selectedIndices = list.getSelectedIndices();
+                for (int i = selectedIndices.length - 1; i >= 0; i--) {
+                    listModel.remove(selectedIndices[i]);
+                    listModel1.remove(selectedIndices[i]);
+                    listModel2.remove(selectedIndices[i]);
+                    listModel3.remove(selectedIndices[i]);
+                }
+			}
+		});
+		btnNewButton_43.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_43.setBounds(78, 407, 54, 53);
+		panel.add(btnNewButton_43);
+		
+		listModel_1 = new DefaultListModel<>();
+		
+		JButton btnNewButton_44 = new JButton("7");
+		btnNewButton_44.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {												
+					textArea.setText(textArea.getText().concat(String.valueOf(7)));
+								
+			}
+		});
+		btnNewButton_44.setBackground(new Color(0, 0, 0));
+		btnNewButton_44.setForeground(Color.WHITE);
+		btnNewButton_44.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_44.setBounds(374, 506, 61, 53);
+		panel.add(btnNewButton_44);
+		
+		JButton btnNewButton_45 = new JButton("8");
+		btnNewButton_45.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(8)));
+			}
+		});
+		btnNewButton_45.setBackground(new Color(0, 0, 0));
+		btnNewButton_45.setForeground(Color.WHITE);
+		btnNewButton_45.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_45.setBounds(450, 506, 61, 53);
+		panel.add(btnNewButton_45);
+		
+		JButton btnNewButton_46 = new JButton("9");
+		btnNewButton_46.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(9)));
+			}
+		});
+		btnNewButton_46.setBackground(new Color(0, 0, 0));
+		btnNewButton_46.setForeground(Color.WHITE);
+		btnNewButton_46.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_46.setBounds(523, 506, 61, 53);
+		panel.add(btnNewButton_46);
+		
+		JButton btnNewButton_47 = new JButton("4");
+		btnNewButton_47.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(4)));
+			}
+		});
+		btnNewButton_47.setBackground(new Color(0, 0, 0));
+		btnNewButton_47.setForeground(Color.WHITE);
+		btnNewButton_47.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_47.setBounds(374, 569, 61, 53);
+		panel.add(btnNewButton_47);
+		
+		JButton btnNewButton_48 = new JButton("5");
+		btnNewButton_48.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(5)));
+			}
+		});
+		btnNewButton_48.setBackground(new Color(0, 0, 0));
+		btnNewButton_48.setForeground(Color.WHITE);
+		btnNewButton_48.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_48.setBounds(450, 569, 61, 53);
+		panel.add(btnNewButton_48);
+		
+		JButton btnNewButton_49 = new JButton("6");
+		btnNewButton_49.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(6)));
+			}
+		});
+		btnNewButton_49.setBackground(new Color(0, 0, 0));
+		btnNewButton_49.setForeground(Color.WHITE);
+		btnNewButton_49.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_49.setBounds(523, 569, 61, 53);
+		panel.add(btnNewButton_49);
+		
+		JButton btnNewButton_50 = new JButton("1");
+		btnNewButton_50.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(1)));
+			}
+		});
+		btnNewButton_50.setBackground(new Color(0, 0, 0));
+		btnNewButton_50.setForeground(Color.WHITE);
+		btnNewButton_50.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_50.setBounds(374, 631, 63, 51);
+		panel.add(btnNewButton_50);
+		
+		JButton btnNewButton_51 = new JButton("2");
+		btnNewButton_51.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(2)));
+			}
+		});
+		btnNewButton_51.setBackground(new Color(0, 0, 0));
+		btnNewButton_51.setForeground(Color.WHITE);
+		btnNewButton_51.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_51.setBounds(450, 631, 63, 51);
+		panel.add(btnNewButton_51);
+		
+		JButton btnNewButton_52 = new JButton("3");
+		btnNewButton_52.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(3)));
+			}
+		});
+		btnNewButton_52.setBackground(new Color(0, 0, 0));
+		btnNewButton_52.setForeground(Color.WHITE);
+		btnNewButton_52.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_52.setBounds(523, 631, 63, 51);
+		panel.add(btnNewButton_52);
+		
+		JButton btnNewButton_53 = new JButton("0");
+		btnNewButton_53.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(0)));
+			}
+		});
+		btnNewButton_53.setBackground(new Color(0, 0, 0));
+		btnNewButton_53.setForeground(Color.WHITE);
+		btnNewButton_53.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_53.setBounds(374, 692, 63, 51);
+		panel.add(btnNewButton_53);
+		
+		JButton btnNewButton_54 = new JButton("00");
+		btnNewButton_54.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(0)));
+				textArea.setText(textArea.getText().concat(String.valueOf(0)));
+			}
+		});
+		btnNewButton_54.setBackground(new Color(0, 0, 0));
+		btnNewButton_54.setForeground(Color.WHITE);
+		btnNewButton_54.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_54.setBounds(450, 692, 63, 51);
+		panel.add(btnNewButton_54);
+		
+		JButton btnNewButton_55 = new JButton("C");
+		btnNewButton_55.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText("");
+			}
+		});
+		btnNewButton_55.setBackground(new Color(0, 0, 0));
+		btnNewButton_55.setForeground(Color.WHITE);
+		btnNewButton_55.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_55.setBounds(523, 692, 63, 51);
+		panel.add(btnNewButton_55);
+		
+		JButton btnNewButton_56 = new JButton("<");
+		btnNewButton_56.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String str = textArea.getText();
+				textArea.setText("");
+				for(int i = 0; i < str.length()-1; i++) {
+					textArea.setText(textArea.getText()+str.charAt(i));
+				}
+			}
+		});
+		btnNewButton_56.setBackground(new Color(0, 0, 0));
+		btnNewButton_56.setForeground(Color.WHITE);
+		btnNewButton_56.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_56.setBounds(372, 753, 63, 51);
+		panel.add(btnNewButton_56);
+		
+		JButton btnNewButton_57 = new JButton("Enter");
+		btnNewButton_57.setBackground(new Color(0, 0, 0));
+		btnNewButton_57.setForeground(Color.WHITE);
+		btnNewButton_57.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_57.setBounds(450, 753, 134, 51);
+		panel.add(btnNewButton_57);
+		
+		textArea = new JTextArea();
+		textArea.setBounds(374, 468, 210, 28);
+		textArea.setComponentOrientation(java.awt.ComponentOrientation.RIGHT_TO_LEFT);		
+		panel.add(textArea);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(170, 38, 157, 317);
+		panel.add(scrollPane);
+		
+		JList<String> list_1 = new JList<>();
+		scrollPane.setViewportView(list_1);		
+		
+		list_1.setModel(listModel1);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(327, 38, 150, 317);
+		panel.add(scrollPane);
+		
+		JList<String> list_2 = new JList<>();
+		scrollPane.setViewportView(list_2);		
+		
+		list_2.setModel(listModel2);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(477, 37, 107, 317);
+		panel.add(scrollPane);
+		
+		JList<String> list_3 = new JList<>();
+		scrollPane.setViewportView(list_3);		
+		
+		list_3.setModel(listModel3);
+
+	}
+		
+		private void showFood() {			
+			
+		}
+
+		private void showFood(String foodName) {
+		    // 데이터베이스 연결 정보
+		    String url = "jdbc:mysql://localhost/cban";
+		    String username = "root";
+		    String password = "1234";
+
+		    try {
+		        // JDBC 드라이버 로드
+		        Class.forName("com.mysql.cj.jdbc.Driver");
+
+		        // 데이터베이스 연결
+		        Connection connection = DriverManager.getConnection(url, username, password);
+
+		        // 쿼리 실행
+		        Statement statement = connection.createStatement();
+
+		        // foodName을 사용하여 동적으로 쿼리 생성
+		        String query = "SELECT * FROM newtable WHERE menu = '" + foodName + "'";
+		        ResultSet resultSet = statement.executeQuery(query);
+
+		        try {
+		            while (resultSet.next()) {
+		                String menu = resultSet.getString("menu"); // 가져올 열 이름 지정
+		                String price = resultSet.getString("price");
+		                String number = resultSet.getString("number");
+		                String totalprice = resultSet.getString("totalprice");
+		                listModel.addElement(menu);
+		                listModel1.addElement(price);
+		                listModel2.addElement(number);
+		                listModel3.addElement(totalprice);		                
+		            }
+		        } catch (SQLException e1) {
+		            e1.printStackTrace();
+		        }
+
+		        // 자원 해제
+		        resultSet.close();
+		        statement.close();
+		        connection.close();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		
+	}
+	
+
+	//mainPanel 관리
+	private void mainPanel(JPanel switchPanel, JPanel mainPanel) {
+		JButton btnStoreManage = new JButton(imgSM);
+		btnStoreManage.setBackground(new Color(255, 255, 255));
+		btnStoreManage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cardLayout = (CardLayout) switchPanel.getLayout();
+                cardLayout.show(switchPanel, "storeManage");
+			}
+		});
+		btnStoreManage.setBounds(980, 346, 250, 250);
+		mainPanel.add(btnStoreManage);
+		
+		JButton btnSaleManage = new JButton(imgPM);
+		btnSaleManage.setBackground(new Color(255, 255, 255));
+		btnSaleManage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cardLayout = (CardLayout) switchPanel.getLayout();
+                cardLayout.show(switchPanel, "saleManage");
+				
+			}
+		});
+		btnSaleManage.setBounds(718, 346, 250, 250);
+		mainPanel.add(btnSaleManage);
+		
+		JButton btnExit1 = new JButton(imgSystemOff);
+		btnExit1.setBackground(new Color(255, 255, 255));
+		btnExit1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					System.exit(0);
+				}
+			
+		});
+		btnExit1.setBounds(980, 606, 250, 250);
+		mainPanel.add(btnExit1);
+		
+        //payPanel 열기 
+        JButton btnConfiguration = new JButton(imgConfig);
+        btnConfiguration.setForeground(new Color(255, 255, 255));
+        btnConfiguration.setBackground(new Color(255, 255, 255));
+        btnConfiguration.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		CardLayout cardLayout = (CardLayout) switchPanel.getLayout();
+                cardLayout.show(switchPanel, "PayPanel");
+        	}
+        });
+        mainPanel.add(btnConfiguration);        
+        btnConfiguration.setBounds(718, 606, 250, 250);
+        
+        JPanel imagePanel = new JPanel();
+        imagePanel.setBackground(new Color(255, 255, 255));
+        imagePanel.setBounds(12, 10, 680, 846); 
+        mainPanel.add(imagePanel);
+		imagePanel.setLayout(null);
+        
+        
+		JLabel lblNewLabel = new JLabel(imgMainLogo);
+		lblNewLabel.setBounds(0, 0, 680, 864);
+		imagePanel.add(lblNewLabel);
+		
+		 JPanel logoPanel = new JPanel();
+	        logoPanel.setBounds(718, 10, 512, 310);
+	        mainPanel.add(logoPanel);
+	        logoPanel.setLayout(null);
+	        
+	        JLabel logoLabel = new JLabel(imgLogo);
+	        logoLabel.setBounds(0, 0, 512, 312);
+	        logoPanel.add(logoLabel);
+	}
+	
+	//시간패널
+	private void TimeMethod() {
+		JPanel timePanel = new JPanel();
+		timePanel.setBackground(new Color(44, 44, 44));
+        timePanel.setBounds(12, 10, 1242, 91);
+        contentPane.add(timePanel);
+        timePanel.setLayout(null);	
+        
+        DigitalClockPanel clockPanel = new DigitalClockPanel();
+        clockPanel.setForeground(new Color(255, 255, 255));
+        clockPanel.setBackground(new Color(44, 44, 44));
+        clockPanel.setBounds(1113, 33, 117, 48);
+        timePanel.add(clockPanel);
+        
+        JLabel NowTime = new JLabel("현재시각 : ");
+        NowTime.setForeground(new Color(255, 255, 255));
+        NowTime.setFont(new Font("맑은 고딕", Font.BOLD, 23));
+        NowTime.setBounds(1002, 33, 117, 48);
+        timePanel.add(NowTime);
+        
+        JLabel StoreName = new JLabel("매장명 : 담담 삼겹살(인천본점)");
+        StoreName.setForeground(new Color(255, 255, 255));
+        StoreName.setBackground(new Color(255, 255, 255));
+        StoreName.setFont(new Font("맑은 고딕", Font.BOLD, 17));
+        StoreName.setBounds(12, 0, 357, 48);
+        timePanel.add(StoreName);
+        
+        DatePanel datePanel = new DatePanel();
+        datePanel.setForeground(new Color(255, 255, 255));
+        datePanel.setBackground(new Color(44, 44, 44));
+        datePanel.setBounds(979, -16, 154, 58);
+        timePanel.add(datePanel);
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
+}
