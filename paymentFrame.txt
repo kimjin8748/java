@@ -1,0 +1,1060 @@
+package java_project;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import java.awt.CardLayout;
+import java.awt.Color;
+import javax.swing.JList;
+import javax.swing.JTextField;
+import javax.swing.JScrollBar;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+
+public class paymentFrame extends JFrame {
+
+	private JPanel contentPane;
+	private JButton btnNewButton_10;
+	private JButton btnNewButton_11;
+	private JButton btnNewButton_13;
+	private JButton btnNewButton_12;
+	private JButton btnNewButton_14;
+	private JButton btnNewButton_15;
+	private JButton btnNewButton_16;
+	private JButton btnNewButton_17;
+	private JButton btnNewButton_18;
+	private JButton btnNewButton_19;
+	private JButton btnNewButton_20;
+	private JButton btnNewButton_21;
+	private JButton btnNewButton_22;
+	private JButton btnNewButton_23;
+	private JButton btnNewButton_24;
+	private JButton btnNewButton_25;
+	private JButton btnNewButton_26;
+	private JButton btnNewButton_27;
+	private JButton btnNewButton_28;
+	private JButton btnNewButton_29;
+	private JButton btnNewButton_30;
+	private JButton btnNewButton_31;
+	private JButton btnNewButton_32;
+	private JButton btnNewButton_33;
+	private JButton btnNewButton_34;
+	private JButton btnNewButton_35;
+	private JButton btnNewButton_36;
+	private JButton btnNewButton_37;
+	private JButton btnNewButton_38;
+	private JButton btnNewButton_39;
+	private JButton btnNewButton_40;
+	private DefaultListModel<String> listModel;
+	private JTextField textField;
+	private ResultSet resultSet;
+	private JTextField textField_1;
+	private JScrollPane scrollPane;
+	private JPanel panel_2;
+	private JButton btnNewButton_42;
+	private DefaultListModel<String> listModel_1;
+	private JTextArea textArea;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					paymentFrame frame = new paymentFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public paymentFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1280, 1024);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+						
+		JPanel panel = new JPanel();
+		panel.setBounds(626, 124, 626, 851);
+		panel.setBackground(Color.LIGHT_GRAY);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		showFood();
+		
+		JButton btnNewButton = new JButton("세트메뉴");
+		btnNewButton.setForeground(new Color(255, 255, 255));
+		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_10.setVisible(true);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_21.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+			}
+		});
+		btnNewButton.setBackground(Color.DARK_GRAY);
+		btnNewButton.setBounds(12, 20, 108, 75);
+		panel.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("2~3인분메뉴");
+		btnNewButton_1.setForeground(new Color(255, 255, 255));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_11.setVisible(true);
+				btnNewButton_12.setVisible(true);
+				btnNewButton_13.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(true);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_21.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+				
+			}
+		});
+		btnNewButton_1.setBackground(Color.DARK_GRAY);
+		btnNewButton_1.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_1.setBounds(132, 21, 108, 74);
+		panel.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("추가메뉴");
+		btnNewButton_2.setForeground(new Color(255, 255, 255));
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_14.setVisible(true);
+				btnNewButton_15.setVisible(true);
+				btnNewButton_16.setVisible(true);
+				btnNewButton_17.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_11.setVisible(false);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+				
+			}
+		});
+		btnNewButton_2.setBackground(Color.DARK_GRAY);
+		btnNewButton_2.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_2.setBounds(252, 19, 108, 76);
+		panel.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("사이드메뉴");
+		btnNewButton_3.setForeground(new Color(255, 255, 255));
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_18.setVisible(true);
+				btnNewButton_19.setVisible(true);
+				btnNewButton_20.setVisible(true);
+				btnNewButton_21.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_11.setVisible(false);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+			}
+		});
+		btnNewButton_3.setBackground(Color.DARK_GRAY);
+		btnNewButton_3.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_3.setBounds(372, 19, 108, 76);
+		panel.add(btnNewButton_3);
+		
+		JButton btnNewButton_4 = new JButton("후식메뉴");
+		btnNewButton_4.setForeground(new Color(255, 255, 255));
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_22.setVisible(true);
+				btnNewButton_23.setVisible(true);
+				btnNewButton_24.setVisible(true);
+				btnNewButton_25.setVisible(true);
+				btnNewButton_26.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_11.setVisible(false);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_21.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+			}
+		});
+		btnNewButton_4.setBackground(Color.DARK_GRAY);
+		btnNewButton_4.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_4.setBounds(492, 19, 108, 76);
+		panel.add(btnNewButton_4);
+		
+		JButton btnNewButton_5 = new JButton("식사메뉴");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_35.setVisible(true);
+				btnNewButton_36.setVisible(true);
+				btnNewButton_37.setVisible(true);
+				btnNewButton_38.setVisible(true);
+				btnNewButton_39.setVisible(true);
+				btnNewButton_40.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_11.setVisible(false);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_21.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_27.setVisible(false);
+				btnNewButton_28.setVisible(false);
+				btnNewButton_29.setVisible(false);
+				btnNewButton_30.setVisible(false);
+				btnNewButton_31.setVisible(false);
+				btnNewButton_32.setVisible(false);
+				btnNewButton_33.setVisible(false);
+				btnNewButton_34.setVisible(false);
+			}
+		});
+		btnNewButton_5.setForeground(new Color(255, 255, 255));
+		btnNewButton_5.setBackground(Color.DARK_GRAY);
+		btnNewButton_5.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_5.setBounds(12, 105, 108, 75);
+		panel.add(btnNewButton_5);
+		
+		JButton btnNewButton_6 = new JButton("주류/음류");
+		btnNewButton_6.setForeground(new Color(255, 255, 255));
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_27.setVisible(true);
+				btnNewButton_28.setVisible(true);
+				btnNewButton_29.setVisible(true);
+				btnNewButton_30.setVisible(true);
+				btnNewButton_31.setVisible(true);
+				btnNewButton_32.setVisible(true);
+				btnNewButton_33.setVisible(true);
+				btnNewButton_34.setVisible(true);
+				btnNewButton_10.setVisible(false);
+				btnNewButton_11.setVisible(false);
+				btnNewButton_12.setVisible(false);
+				btnNewButton_13.setVisible(false);
+				btnNewButton_14.setVisible(false);
+				btnNewButton_15.setVisible(false);
+				btnNewButton_16.setVisible(false);
+				btnNewButton_17.setVisible(false);
+				btnNewButton_18.setVisible(false);
+				btnNewButton_19.setVisible(false);
+				btnNewButton_20.setVisible(false);
+				btnNewButton_21.setVisible(false);
+				btnNewButton_22.setVisible(false);
+				btnNewButton_23.setVisible(false);
+				btnNewButton_24.setVisible(false);
+				btnNewButton_25.setVisible(false);
+				btnNewButton_26.setVisible(false);
+				btnNewButton_35.setVisible(false);
+				btnNewButton_36.setVisible(false);
+				btnNewButton_37.setVisible(false);
+				btnNewButton_38.setVisible(false);
+				btnNewButton_39.setVisible(false);
+				btnNewButton_40.setVisible(false);
+			}
+		});
+		btnNewButton_6.setBackground(Color.DARK_GRAY);		
+		btnNewButton_6.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_6.setBounds(132, 104, 108, 76);
+		panel.add(btnNewButton_6);
+		
+		JButton btnNewButton_7 = new JButton("주문");
+		btnNewButton_7.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_7.setBounds(12, 708, 91, 133);
+		panel.add(btnNewButton_7);
+		
+		JButton btnNewButton_8 = new JButton("현금");
+		btnNewButton_8.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_8.setBounds(115, 708, 91, 133);
+		panel.add(btnNewButton_8);
+		
+		JButton btnNewButton_9 = new JButton("<html>신용<br>카드</html>");
+		btnNewButton_9.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_9.setBounds(218, 708, 91, 133);
+		panel.add(btnNewButton_9);
+		
+		//세트메뉴
+		btnNewButton_10 = new JButton("모듬세트");
+		btnNewButton_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("모둠세트");
+			}
+		});
+		btnNewButton_10.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_10.setBounds(12, 190, 108, 75);
+		btnNewButton_10.setVisible(false);
+		panel.add(btnNewButton_10);
+		
+		//2~3인분 메뉴
+		btnNewButton_11 = new JButton("진갈비");
+		btnNewButton_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("진갈비");
+			}
+		});
+		btnNewButton_11.setFont(new Font("굴림", Font.PLAIN, 12));		
+		btnNewButton_11.setBounds(12, 190, 108, 75);
+		btnNewButton_11.setVisible(false);
+		panel.add(btnNewButton_11);
+		
+		btnNewButton_12 = new JButton("안창살");
+		btnNewButton_12.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("안창살");
+			}
+		});
+		btnNewButton_12.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_12.setBounds(132, 190, 108, 75);
+		btnNewButton_12.setVisible(false);
+		panel.add(btnNewButton_12);
+		
+		btnNewButton_13 = new JButton("갈비살");
+		btnNewButton_13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("갈비살");
+			}
+		});
+		btnNewButton_13.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_13.setBounds(252, 190, 108, 75);
+		btnNewButton_13.setVisible(false);
+		panel.add(btnNewButton_13);
+		
+		//추가메뉴
+		btnNewButton_14 = new JButton("눈꽃살(진갈비)");
+		btnNewButton_14.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("눈꽃살(진갈비)");
+			}
+		});
+		btnNewButton_14.setFont(new Font("굴림", Font.PLAIN, 11));
+		btnNewButton_14.setBounds(12, 190, 108, 75);
+		btnNewButton_14.setVisible(false);
+		panel.add(btnNewButton_14);
+		
+		btnNewButton_15 = new JButton("안창살(미국산)");
+		btnNewButton_15.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("안창살(미국산)");
+			}
+		});
+		btnNewButton_15.setFont(new Font("굴림", Font.PLAIN, 10));
+		btnNewButton_15.setBounds(132, 190, 108, 75);
+		btnNewButton_15.setVisible(false);
+		panel.add(btnNewButton_15);
+		
+		btnNewButton_16 = new JButton("갈비살(미국산)");
+		btnNewButton_16.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("갈비살(미국산)");
+			}
+		});
+		btnNewButton_16.setFont(new Font("굴림", Font.PLAIN, 11));
+		btnNewButton_16.setBounds(252, 190, 108, 75);
+		btnNewButton_16.setVisible(false);
+		panel.add(btnNewButton_16);
+		
+		btnNewButton_17 = new JButton("한우/육회");
+		btnNewButton_17.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("한우/육회");
+			}
+		});
+		btnNewButton_17.setFont(new Font("굴림", Font.PLAIN, 11));
+		btnNewButton_17.setBounds(372, 190, 108, 75);
+		btnNewButton_17.setVisible(false);
+		panel.add(btnNewButton_17);
+		
+		//사이드메뉴
+		btnNewButton_18 = new JButton("모듬소세지");
+		btnNewButton_18.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("모듬소세지");
+			}
+		});
+		btnNewButton_18.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_18.setBounds(12, 190, 108, 75);
+		btnNewButton_18.setVisible(false);
+		panel.add(btnNewButton_18);
+		
+		btnNewButton_19 = new JButton("모듬버섯");
+		btnNewButton_19.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("모듬버섯");
+			}
+		});
+		btnNewButton_19.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_19.setBounds(132, 190, 108, 75);
+		btnNewButton_19.setVisible(false);
+		panel.add(btnNewButton_19);
+		
+		btnNewButton_20 = new JButton("소시지&버섯");
+		btnNewButton_20.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("소시지&버섯");
+			}
+		});
+		btnNewButton_20.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_20.setBounds(252, 190, 108, 75);
+		btnNewButton_20.setVisible(false);
+		panel.add(btnNewButton_20);
+		
+		btnNewButton_21 = new JButton("구워먹는치즈");
+		btnNewButton_21.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("소시지&버섯");
+			}
+		});
+		btnNewButton_21.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_21.setBounds(372, 190, 108, 75);
+		btnNewButton_21.setVisible(false);
+		panel.add(btnNewButton_21);
+		
+		//후식메뉴
+		btnNewButton_22 = new JButton("된장찌개");
+		btnNewButton_22.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("된장찌개");
+			}
+		});
+		btnNewButton_22.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_22.setBounds(12, 190, 108, 75);
+		btnNewButton_22.setVisible(false);
+		panel.add(btnNewButton_22);
+		
+		btnNewButton_23 = new JButton("계란찜");
+		btnNewButton_23.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("계란찜");
+			}
+		});
+		btnNewButton_23.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_23.setBounds(132, 190, 108, 75);
+		btnNewButton_23.setVisible(false);
+		panel.add(btnNewButton_23);
+		
+		btnNewButton_24 = new JButton("물냉면(후식)");
+		btnNewButton_24.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("물냉면(후식)");
+			}
+		});
+		btnNewButton_24.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_24.setBounds(252, 190, 108, 75);
+		btnNewButton_24.setVisible(false);
+		panel.add(btnNewButton_24);
+		
+		btnNewButton_25 = new JButton("비빔냉면(후식)");
+		btnNewButton_25.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("비빔냉면(후식)");
+			}
+		});
+		btnNewButton_25.setFont(new Font("굴림", Font.PLAIN, 11));
+		btnNewButton_25.setBounds(372, 190, 108, 75);
+		btnNewButton_25.setVisible(false);
+		panel.add(btnNewButton_25);
+		
+		btnNewButton_26 = new JButton("공기밥");
+		btnNewButton_26.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("공기밥");
+			}
+		});
+		btnNewButton_26.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_26.setBounds(492, 190, 108, 75);
+		btnNewButton_26.setVisible(false);
+		panel.add(btnNewButton_26);
+		
+		//주류/음료
+		btnNewButton_27 = new JButton("참이슬");
+		btnNewButton_27.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("참이슬");
+			}
+		});
+		btnNewButton_27.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_27.setBounds(12, 190, 108, 75);
+		btnNewButton_27.setVisible(false);
+		panel.add(btnNewButton_27);
+		
+		btnNewButton_28 = new JButton("처음처럼");
+		btnNewButton_28.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("처음처럼");
+			}
+		});
+		btnNewButton_28.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_28.setBounds(132, 190, 108, 75);
+		btnNewButton_28.setVisible(false);
+		panel.add(btnNewButton_28);
+		
+		btnNewButton_29 = new JButton("테라");
+		btnNewButton_29.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("테라");
+			}
+		});
+		btnNewButton_29.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_29.setBounds(252, 190, 108, 75);
+		btnNewButton_29.setVisible(false);
+		panel.add(btnNewButton_29);
+		
+		btnNewButton_30 = new JButton("카스");
+		btnNewButton_30.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("카스");
+			}
+		});
+		btnNewButton_30.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_30.setBounds(372, 190, 108, 75);
+		btnNewButton_30.setVisible(false);
+		panel.add(btnNewButton_30);
+		
+		btnNewButton_31 = new JButton("진로");
+		btnNewButton_31.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("진로");
+			}
+		});
+		btnNewButton_31.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_31.setBounds(492, 190, 108, 75);
+		btnNewButton_31.setVisible(false);
+		panel.add(btnNewButton_31);
+		
+		btnNewButton_32 = new JButton("콜라");
+		btnNewButton_32.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("콜라");
+			}
+		});
+		btnNewButton_32.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_32.setBounds(12, 275, 108, 75);
+		btnNewButton_32.setVisible(false);
+		panel.add(btnNewButton_32);
+		
+		btnNewButton_33 = new JButton("사이다");
+		btnNewButton_33.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("사이다");
+			}
+		});
+		btnNewButton_33.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_33.setBounds(132, 275, 108, 75);
+		btnNewButton_33.setVisible(false);
+		panel.add(btnNewButton_33);
+		
+		btnNewButton_34 = new JButton("환타");
+		btnNewButton_34.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("환타");
+			}
+		});
+		btnNewButton_34.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_34.setBounds(252, 275, 108, 75);
+		btnNewButton_34.setVisible(false);
+		panel.add(btnNewButton_34);
+		
+		
+		//식사메뉴
+		btnNewButton_35 = new JButton("장터국밥");
+		btnNewButton_35.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("장터국밥");
+			}
+		});
+		btnNewButton_35.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_35.setBounds(12, 190, 108, 75);
+		btnNewButton_35.setVisible(false);
+		panel.add(btnNewButton_35);
+		
+		btnNewButton_36 = new JButton("갈비탕");
+		btnNewButton_36.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("갈비탕");
+			}
+		});
+		btnNewButton_36.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_36.setBounds(132, 190, 108, 75);
+		btnNewButton_36.setVisible(false);
+		panel.add(btnNewButton_36);
+		
+		btnNewButton_37 = new JButton("육회비빔밥");
+		btnNewButton_37.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("육회비빔밥");
+			}
+		});
+		btnNewButton_37.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_37.setBounds(252, 190, 108, 75);
+		btnNewButton_37.setVisible(false);
+		panel.add(btnNewButton_37);
+		
+		btnNewButton_38 = new JButton("만두국");
+		btnNewButton_38.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("만두국");
+			}
+		});
+		btnNewButton_38.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_38.setBounds(372, 190, 108, 75);
+		btnNewButton_38.setVisible(false);
+		panel.add(btnNewButton_38);
+		
+		btnNewButton_39 = new JButton("물냉면");
+		btnNewButton_39.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("물냉면");
+			}
+		});
+		btnNewButton_39.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_39.setBounds(492, 190, 108, 75);
+		btnNewButton_39.setVisible(false);
+		panel.add(btnNewButton_39);
+		
+		btnNewButton_40 = new JButton("비빔냉면");
+		btnNewButton_40.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFood("비빔냉면");
+			}
+		});
+		btnNewButton_40.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_40.setBounds(12, 275, 108, 75);
+		btnNewButton_40.setVisible(false);
+		panel.add(btnNewButton_40);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(192, 192, 192));
+		panel_1.setBounds(12, 124, 596, 384);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		
+		
+		
+		listModel = new DefaultListModel<>();
+		
+		textField = new JTextField();
+		textField.setForeground(new Color(255, 255, 255));
+		textField.setText("메뉴명                               단가                                  수량                               금액");
+		textField.setBackground(new Color(0, 0, 0));
+		textField.setBounds(12, 18, 572, 21);
+		textField.setEditable(false);
+		panel_1.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setText("                    합 계");
+		textField_1.setForeground(new Color(255, 255, 255));
+		textField_1.setBackground(new Color(0, 0, 0));
+		textField_1.setBounds(12, 353, 572, 21);
+		textField_1.setEditable(false);
+		panel_1.add(textField_1);
+		textField_1.setColumns(10);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(12, 36, 572, 317);
+		panel_1.add(scrollPane);
+		
+		JList<String> list = new JList<>();
+		scrollPane.setViewportView(list);
+		
+		list.setModel(listModel);
+		
+		panel_2 = new JPanel();
+		panel_2.setBackground(Color.LIGHT_GRAY);
+		panel_2.setBounds(12, 517, 596, 458);
+		contentPane.add(panel_2);
+		panel_2.setLayout(null);
+		
+		JButton btnNewButton_41 = new JButton("<html>전체<br>취소</html>");
+		btnNewButton_41.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listModel.clear();
+			}
+		});
+		btnNewButton_41.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_41.setBounds(12, 10, 54, 53);
+		panel_2.add(btnNewButton_41);
+		
+		btnNewButton_42 = new JButton("<html>선택<br>취소</html>");
+		btnNewButton_42.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int[] selectedIndices = list.getSelectedIndices();
+                for (int i = selectedIndices.length - 1; i >= 0; i--) {
+                    listModel.remove(selectedIndices[i]);
+                }
+			}
+		});
+		btnNewButton_42.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnNewButton_42.setBounds(78, 10, 54, 53);
+		panel_2.add(btnNewButton_42);
+		
+		listModel_1 = new DefaultListModel<>();
+		
+		JButton btnNewButton_43 = new JButton("7");
+		btnNewButton_43.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {												
+					textArea.setText(textArea.getText().concat(String.valueOf(7)));
+								
+			}
+		});
+		btnNewButton_43.setBackground(new Color(0, 0, 0));
+		btnNewButton_43.setForeground(Color.WHITE);
+		btnNewButton_43.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_43.setBounds(374, 109, 61, 53);
+		panel_2.add(btnNewButton_43);
+		
+		JButton btnNewButton_44 = new JButton("8");
+		btnNewButton_44.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(8)));
+			}
+		});
+		btnNewButton_44.setBackground(new Color(0, 0, 0));
+		btnNewButton_44.setForeground(Color.WHITE);
+		btnNewButton_44.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_44.setBounds(450, 109, 61, 53);
+		panel_2.add(btnNewButton_44);
+		
+		JButton btnNewButton_45 = new JButton("9");
+		btnNewButton_45.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(9)));
+			}
+		});
+		btnNewButton_45.setBackground(new Color(0, 0, 0));
+		btnNewButton_45.setForeground(Color.WHITE);
+		btnNewButton_45.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_45.setBounds(523, 109, 61, 53);
+		panel_2.add(btnNewButton_45);
+		
+		JButton btnNewButton_46 = new JButton("4");
+		btnNewButton_46.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(4)));
+			}
+		});
+		btnNewButton_46.setBackground(new Color(0, 0, 0));
+		btnNewButton_46.setForeground(Color.WHITE);
+		btnNewButton_46.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_46.setBounds(374, 172, 61, 53);
+		panel_2.add(btnNewButton_46);
+		
+		JButton btnNewButton_47 = new JButton("5");
+		btnNewButton_47.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(5)));
+			}
+		});
+		btnNewButton_47.setBackground(new Color(0, 0, 0));
+		btnNewButton_47.setForeground(Color.WHITE);
+		btnNewButton_47.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_47.setBounds(450, 172, 61, 53);
+		panel_2.add(btnNewButton_47);
+		
+		JButton btnNewButton_48 = new JButton("6");
+		btnNewButton_48.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(6)));
+			}
+		});
+		btnNewButton_48.setBackground(new Color(0, 0, 0));
+		btnNewButton_48.setForeground(Color.WHITE);
+		btnNewButton_48.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_48.setBounds(523, 172, 61, 53);
+		panel_2.add(btnNewButton_48);
+		
+		JButton btnNewButton_49 = new JButton("1");
+		btnNewButton_49.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(1)));
+			}
+		});
+		btnNewButton_49.setBackground(new Color(0, 0, 0));
+		btnNewButton_49.setForeground(Color.WHITE);
+		btnNewButton_49.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_49.setBounds(374, 234, 63, 51);
+		panel_2.add(btnNewButton_49);
+		
+		JButton btnNewButton_50 = new JButton("2");
+		btnNewButton_50.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(2)));
+			}
+		});
+		btnNewButton_50.setBackground(new Color(0, 0, 0));
+		btnNewButton_50.setForeground(Color.WHITE);
+		btnNewButton_50.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_50.setBounds(450, 234, 63, 51);
+		panel_2.add(btnNewButton_50);
+		
+		JButton btnNewButton_51 = new JButton("3");
+		btnNewButton_51.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(3)));
+			}
+		});
+		btnNewButton_51.setBackground(new Color(0, 0, 0));
+		btnNewButton_51.setForeground(Color.WHITE);
+		btnNewButton_51.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_51.setBounds(523, 234, 63, 51);
+		panel_2.add(btnNewButton_51);
+		
+		JButton btnNewButton_52 = new JButton("0");
+		btnNewButton_52.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(0)));
+			}
+		});
+		btnNewButton_52.setBackground(new Color(0, 0, 0));
+		btnNewButton_52.setForeground(Color.WHITE);
+		btnNewButton_52.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_52.setBounds(374, 295, 63, 51);
+		panel_2.add(btnNewButton_52);
+		
+		JButton btnNewButton_53 = new JButton("00");
+		btnNewButton_53.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(textArea.getText().concat(String.valueOf(0)));
+				textArea.setText(textArea.getText().concat(String.valueOf(0)));
+			}
+		});
+		btnNewButton_53.setBackground(new Color(0, 0, 0));
+		btnNewButton_53.setForeground(Color.WHITE);
+		btnNewButton_53.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_53.setBounds(450, 295, 63, 51);
+		panel_2.add(btnNewButton_53);
+		
+		JButton btnNewButton_54 = new JButton("C");
+		btnNewButton_54.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText("");
+			}
+		});
+		btnNewButton_54.setBackground(new Color(0, 0, 0));
+		btnNewButton_54.setForeground(Color.WHITE);
+		btnNewButton_54.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_54.setBounds(523, 295, 63, 51);
+		panel_2.add(btnNewButton_54);
+		
+		JButton btnNewButton_55 = new JButton("<");
+		btnNewButton_55.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String str = textArea.getText();
+				textArea.setText("");
+				for(int i = 0; i < str.length()-1; i++) {
+					textArea.setText(textArea.getText()+str.charAt(i));
+				}
+			}
+		});
+		btnNewButton_55.setBackground(new Color(0, 0, 0));
+		btnNewButton_55.setForeground(Color.WHITE);
+		btnNewButton_55.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_55.setBounds(372, 356, 63, 51);
+		panel_2.add(btnNewButton_55);
+		
+		JButton btnNewButton_56 = new JButton("Enter");
+		btnNewButton_56.setBackground(new Color(0, 0, 0));
+		btnNewButton_56.setForeground(Color.WHITE);
+		btnNewButton_56.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_56.setBounds(450, 356, 134, 51);
+		panel_2.add(btnNewButton_56);
+		
+		textArea = new JTextArea();
+		textArea.setBounds(374, 71, 210, 28);
+		textArea.setComponentOrientation(java.awt.ComponentOrientation.RIGHT_TO_LEFT);		
+		panel_2.add(textArea);
+		
+		
+	}
+
+	
+
+	private void showFood() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void showFood(String foodName) {
+	    // 데이터베이스 연결 정보
+	    String url = "jdbc:mysql://localhost/cban";
+	    String username = "root";
+	    String password = "1234";
+
+	    try {
+	        // JDBC 드라이버 로드
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+
+	        // 데이터베이스 연결
+	        Connection connection = DriverManager.getConnection(url, username, password);
+
+	        // 쿼리 실행
+	        Statement statement = connection.createStatement();
+
+	        // foodName을 사용하여 동적으로 쿼리 생성
+	        String query = "SELECT * FROM newtable WHERE menu = '" + foodName + "'";
+	        ResultSet resultSet = statement.executeQuery(query);
+
+	        try {
+	            while (resultSet.next()) {
+	                String menu = resultSet.getString("menu"); // 가져올 열 이름 지정
+	                String price = resultSet.getString("price");
+	                String number = resultSet.getString("number");
+	                listModel.addElement(menu + "                           " + price + "                              " + number);
+	            }
+	        } catch (SQLException e1) {
+	            e1.printStackTrace();
+	        }
+
+	        // 자원 해제
+	        resultSet.close();
+	        statement.close();
+	        connection.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+}
